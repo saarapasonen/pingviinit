@@ -9,3 +9,7 @@
   <li>Asiakas pääsee näkemään koko ajan koodien ja testien tilanteen CI-palvelusta.</li>
   <li>User Storyjen hyväksymiskriteerit toteutuvat.</li>
 </ul> 
+
+
+
+![GHA workflow badge](https://github.com/saarapasonen/pingviinit/workflows/CI/badge.svg)
