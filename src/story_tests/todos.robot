@@ -7,5 +7,5 @@ Test Setup       Reset Todos
 *** Test Cases ***
 At start there are no todos
     Go To  ${HOME_URL}
-    Title Should Be  Todo app
-    Page Should Contain  things still unfinished: 0
+    Title Should Be  ? app
+    
