@@ -14,17 +14,19 @@ def index():
 def new():
     return render_template("uusi_viite.html")
 
-@app.route("/create_todo", methods=["POST"])
-def todo_creation():
-    content = request.form.get("content")
+@app.route("/luo-viite", methods=["POST"])
+def cite_creation():
+    content = request.form.get("cite")
+    print(content)
+    if content == "book":
+       return render_template("book.html")
+    elif content == "article":
+       return render_template("article.html")
+    elif content == "inproceedings":
+       return render_template("inproceedings.html")
+    
+    
 
-    try:
-        validate_todo(content)
-        create_todo(content)
-        return redirect("/")
-    except Exception as error:
-        flash(str(error))
-        return  redirect("/new_todo")
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):

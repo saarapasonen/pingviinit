@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Luo kirja
+{% endblock %}
+
+{% block body %}
+
+<form action="/luo-viite" method="post">
+<p>
+Author:
+<input type="text" id="name" name="author" /> 
+</p>
+<p>
+Title:
+<input type="text" id="name" name="title" /> 
+</p>
+<p>
+Publisher:
+<input type="text" id="name" name="publisher" /> 
+</p> 
+Year:
+<input type="text" id="name" name="year" /> 
+</p> 
+<input type="submit" value="Lisää">
+</form>
+
+{% endblock %}
