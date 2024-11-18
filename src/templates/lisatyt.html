@@ -5,6 +5,10 @@ Lisätyt lähteet
 
 {% block body %}
 
-tähän lähteet
+<hr>
+{% for cite in cites %}
+{{cite}}
+<hr>
 
+{% endfor %}
 {% endblock %}

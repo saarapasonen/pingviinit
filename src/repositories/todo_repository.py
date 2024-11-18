@@ -3,10 +3,10 @@ from sqlalchemy import text
 
 from entities.todo import Todo
 
-def get_todos():
-    result = db.session.execute(text("SELECT id, content, done FROM todos"))
-    todos = result.fetchall()
-    return [Todo(todo[0], todo[1], todo[2]) for todo in todos] 
+def get_cites():
+    result = db.session.execute(text("SELECT * FROM citations"))
+    cites = result.fetchall()
+    return cites
 
 def set_done(todo_id):
     sql = text("UPDATE todos SET done = TRUE WHERE id = :id")
