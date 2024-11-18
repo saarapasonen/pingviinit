@@ -7,7 +7,26 @@ Lisätyt lähteet
 
 <hr>
 {% for cite in cites %}
-{{cite}}
+Tyyppi:
+{{cite.type}}
+<br>
+Tekijä:
+{{cite.author}}
+<br>
+Julkaisija:
+{{cite.publisher}}
+<br>
+Vuosi:
+{{cite.year}}
+<br>
+Otsikko:
+{{cite.title}}
+<br>
+Aikakausijulkaisu:
+{{cite.journal}}
+<br>
+Kirjan otsikko:
+{{cite.booktitle}}
 <hr>
 
 {% endfor %}
