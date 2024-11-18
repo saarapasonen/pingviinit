@@ -14,6 +14,10 @@ def index():
 def new():
     return render_template("uusi_viite.html")
 
+@app.route("/lisatyt")
+def lisatyt():
+    return render_template("lisatyt.html")
+
 @app.route("/luo-viite", methods=["POST"])
 def cite_creation():
     content = request.form.get("cite")
