@@ -6,7 +6,7 @@ Luo inproceedings
 
 {% block body %}
 
-<form action="/luo-viite" method="post">
+<form action="/luo-viite2" id="content" method="post">
 <p>
 Author:
 <input type="text" id="name" name="author" /> 
@@ -22,6 +22,7 @@ Book title:
 Year:
 <input type="text" id="name" name="year" /> 
 </p> 
+<input type="hidden" name="type" value="inproceedings">
 <input type="submit" value="Lisää">
 </form>
 

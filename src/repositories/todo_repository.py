@@ -13,7 +13,7 @@ def set_done(todo_id):
     db.session.execute(sql, { "id": todo_id })
     db.session.commit()
 
-def create_todo(content):
-    sql = text("INSERT INTO todos (content) VALUES (:content)")
-    db.session.execute(sql, { "content": content })
+def create_citation(type, author=None, publisher=None, year=None, title=None, journal=None, booktitle=None):
+    sql = text("INSERT INTO citations (author, publisher, year, title, journal, booktitle) VALUES (:author, :publisher, :year, :title, :journal, :booktitle)")
+    db.session.execute(sql, { "author": author, "publisher": publisher, "year": year, "title": title, "journal": journal, "booktitle": booktitle})
     db.session.commit()
