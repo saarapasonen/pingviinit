@@ -1,8 +1,11 @@
-from flask import redirect, render_template, request, jsonify, flash
+from flask import redirect, render_template, request, jsonify, flash, url_for
 from db_helper import reset_db
-from repositories.todo_repository import get_cites, create_citation, set_done
+from repositories.todo_repository import get_cites, create_citation, set_done, check_citation_type
 from config import app, test_env
 from util import validate_todo
+
+def redirect_to_uusi_viite():
+    return redirect(url_for("render_luo_viite"))
 
 @app.route("/")
 def index():
@@ -17,15 +20,27 @@ def lisatyt():
     cites = get_cites()
     return render_template("lisatyt.html", cites=cites)
 
+@app.route("/luo-viite", methods=["GET"])
+def render_luo_viite():
+    return render_template("uusi_viite.html")
+
 @app.route("/luo-viite", methods=["POST"])
-def cite_creation():
+def handle_type():
     content = request.form.get("cite")
-    if content == "book":
-       return render_template("book.html")
-    elif content == "article":
-       return render_template("article.html")
-    elif content == "inproceedings":
-       return render_template("inproceedings.html")
+
+    try:
+        tyyppi = check_citation_type(content)
+        if tyyppi == "book":
+            return render_template("book.html")
+        elif tyyppi == "article":
+            return render_template("article.html")
+        elif tyyppi == "inproceedings":
+            return render_template("inproceedings.html")
+        
+    except Exception as error:
+        flash(str(error))
+        return redirect_to_uusi_viite()
+    
 
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():

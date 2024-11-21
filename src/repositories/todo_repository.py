@@ -1,7 +1,14 @@
 from config import db
 from sqlalchemy import text
 
+
 from entities.todo import Todo
+
+def check_citation_type(content):
+    if content == "valitseviite":
+        raise ValueError("Valitse viitetyyppi")
+    
+    return content
 
 def get_cites():
     result = db.session.execute(text("SELECT * FROM citations"))
