@@ -29,6 +29,9 @@ def handle_type():
     content = request.form.get("cite")
 
     try:
+        if not content or content == "valitseviite":
+            raise ValueError("Valitse viitetyyppi!")
+
         tyyppi = check_citation_type(content)
         if tyyppi == "book":
             return render_template("book.html")
