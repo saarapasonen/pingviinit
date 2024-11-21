@@ -36,3 +36,19 @@ An article citation can be added
     Page Should Contain  Aliens
     Page Should Contain  Nice journal
     Page Should Contain  2024
+
+An inproceedings citation can be added
+    Go To  ${HOME_URL}
+    Click Link  Luo uusi viite
+    Select From List By Value  cite-select  inproceedings
+    Click Button  Valitse
+    Input Text  author  Kalle K.
+    Input Text  title  Aliens
+    Input Text  booktitle  Dogs
+    Input Text  year  2024
+    Click Button  Lisää
+    Click Link  Lista lisätyistä lähteistä
+    Page Should Contain  Kalle K.
+    Page Should Contain  Aliens
+    Page Should Contain  Dogs
+    Page Should Contain  2024
