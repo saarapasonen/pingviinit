@@ -15,3 +15,4 @@ class TestTodoValidation(unittest.TestCase):
 
         with self.assertRaises(UserInputError):
             validate_todo("koodaa" * 20)
+
