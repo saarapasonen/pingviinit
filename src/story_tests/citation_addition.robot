@@ -20,3 +20,19 @@ A book citation can be added
     Page Should Contain  Aliens
     Page Should Contain  Nice books
     Page Should Contain  2024
+
+An article citation can be added
+    Go To  ${HOME_URL}
+    Click Link  Luo uusi viite
+    Select From List By Value  cite-select  article
+    Click Button  Valitse
+    Input Text  author  Kalle K.
+    Input Text  title  Aliens
+    Input Text  journal  Nice journal
+    Input Text  year  2024
+    Click Button  Lisää
+    Click Link  Lista lisätyistä lähteistä
+    Page Should Contain  Kalle K.
+    Page Should Contain  Aliens
+    Page Should Contain  Nice journal
+    Page Should Contain  2024
