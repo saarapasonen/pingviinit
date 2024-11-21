@@ -8,6 +8,16 @@ Luo uusi viite
 
 <h2>Luo uusi viite</h2>
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li style="color: black;">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endwith %}
+
 <form action="/luo-viite" method="post">
   <label for="content">Viite:</label>
   <label for="cite-select">Valitse viite</label>
