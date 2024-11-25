@@ -1,8 +1,6 @@
-from config import db
 from sqlalchemy import text
+from config import db
 
-
-from entities.todo import Todo
 
 def check_citation_type(content):
     if content == "valitseviite":
