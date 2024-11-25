@@ -2,6 +2,7 @@ import unittest
 from util import validate_year
 from datetime import datetime
 
+
 class test_inproyear(unittest.TestCase):
     def setUp(self):
         pass
@@ -16,7 +17,7 @@ class test_inproyear(unittest.TestCase):
     def test_negatiivinen(self):
         with self.assertRaises(ValueError, msg="Vuoden on oltava positiivinen"):
             validate_year(-200)
-    
+
     def test_one(self):
         self.assertTrue(validate_year(1))
 

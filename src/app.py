@@ -2,7 +2,7 @@ from flask import redirect, render_template, request, jsonify, flash, url_for
 from db_helper import reset_db
 from repositories.todo_repository import get_cites, create_citation, set_done, check_citation_type
 from config import app, test_env
-from util import validate_todo
+
 
 def redirect_to_uusi_viite():
     return redirect(url_for("render_uusi_viite"))
@@ -11,9 +11,11 @@ def redirect_to_uusi_viite():
 def index():
     return render_template("index.html")
 
+
 @app.route("/uusi-viite")
 def new():
     return render_template("uusi_viite.html")
+
 
 @app.route("/lisatyt")
 def lisatyt():
@@ -35,15 +37,15 @@ def handle_type():
         tyyppi = check_citation_type(content)
         if tyyppi == "book":
             return render_template("book.html")
-        elif tyyppi == "article":
+        if tyyppi == "article":
             return render_template("article.html")
-        elif tyyppi == "inproceedings":
+        if tyyppi == "inproceedings":
             return render_template("inproceedings.html")
-        
+
     except Exception as error:
         flash(str(error))
         return redirect_to_uusi_viite()
-    
+
 
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
@@ -74,14 +76,16 @@ def toggle_todo(todo_id):
     set_done(todo_id)
     return redirect("/")
 
+
 @app.route("/bibtex")
 def bibtex():
     cites = get_cites()
     return render_template("bibtex.html", cites=cites)
+
 
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")
     def reset_database():
         reset_db()
-        return jsonify({ 'message': "db reset" })
+        return jsonify({'message': "db reset"})
