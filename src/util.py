@@ -8,7 +8,7 @@ class UserInputError(Exception):
 def validate_year(year):
     current_year = datetime.now().year
     if not isinstance(year, int):
-        raise UserInputError("Vuoden tulee olla kokonaisluku")
+        raise ValueError("Vuoden tulee olla kokonaisluku")
     if year <= 0:
         raise ValueError("Vuoden on oltava positiivinen")
     if year > current_year:

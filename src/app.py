@@ -41,10 +41,11 @@ def handle_type():
             raise ValueError("Valitse viitetyyppi!")
 
         tyyppi = check_citation_type(content)
-        if tyyppi in ["book", "article", "inproceedings"]:
-            return redirect(url_for("render_specific_type", tyyppi=tyyppi))
+        if tyyppi not in ["book", "article", "inproceedings"]:
+            raise ValueError("Vääränlainen viitetyyppi!")
+        return redirect(url_for("render_specific_type", tyyppi=tyyppi))
 
-    except Exception as error:
+    except ValueError as error:
         flash(str(error))
         return redirect_to_uusi_viite()
 
@@ -56,6 +57,7 @@ def render_specific_type(tyyppi):
         return render_template("article.html")
     if tyyppi == "inproceedings":
         return render_template("inproceedings.html")
+    return redirect_to_uusi_viite()
 
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
@@ -101,7 +103,7 @@ def cite_creation2():
                 raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
             create_citation(tyyppi, author, None, year, title, None, booktitle)
 
-    except Exception as error:
+    except ValueError as error:
         flash(str(error))
         return redirect_to_sama_viite(tyyppi)
 
