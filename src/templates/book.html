@@ -6,20 +6,31 @@ Luo kirja
 
 {% block body %}
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <ul style="list-style-type:none;">
+    {% for message in messages %}
+      <li style="color: black;">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endwith %}
+
+
 <form action="/luo-viite2" id="content" method="post">
 <p>
-Author:
+*Author:
 <input type="text" id="name" name="author" /> 
 </p>
 <p>
-Title:
+*Title:
 <input type="text" id="name" name="title" /> 
 </p>
 <p>
-Publisher:
+*Publisher:
 <input type="text" id="name" name="publisher" /> 
 </p> 
-Year:
+*Year:
 <input type="text" id="name" name="year" /> 
 </p> 
 <input type="hidden" name="type" value="book">
