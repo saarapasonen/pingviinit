@@ -2,6 +2,7 @@ import unittest
 from util import validate_year
 from datetime import datetime
 
+
 class Test_articleyear(unittest.TestCase):
     def setUp(self):
         pass
@@ -26,5 +27,3 @@ class Test_articleyear(unittest.TestCase):
         self.assertTrue(validate_year(current_year))
         with self.assertRaises(ValueError, msg="Vuosi ei voi olla tulevaisuudessa"):
             validate_year(current_year + 1)
-
-

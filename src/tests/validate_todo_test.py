@@ -1,6 +1,7 @@
 import unittest
 from util import validate_todo, UserInputError
 
+
 class TestTodoValidation(unittest.TestCase):
     def setUp(self):
         pass
@@ -15,4 +16,3 @@ class TestTodoValidation(unittest.TestCase):
 
         with self.assertRaises(UserInputError):
             validate_todo("koodaa" * 20)
-
