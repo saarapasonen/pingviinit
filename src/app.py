@@ -74,6 +74,11 @@ def toggle_todo(todo_id):
     set_done(todo_id)
     return redirect("/")
 
+@app.route("/bibtex")
+def bibtex():
+    cites = get_cites()
+    return render_template("bibtex.html", cites=cites)
+
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")

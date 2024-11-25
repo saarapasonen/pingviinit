@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Bibtex lähteet
+{% endblock %}
+
+{% block body %}
+
+
+{% for cite in cites %}
+{% if cite.type == "article" %}
+<hr>
+@article{citation-key,
+    <br>
+    &nbsp; &nbsp;author = "{{cite.author}}",
+    <br>
+    &nbsp; &nbsp;title = "{{cite.title}}",
+    <br>
+    &nbsp; &nbsp;journal = "{{cite.journal}}",
+    <br>
+    &nbsp; &nbsp;year = "{{cite.year}}"
+    <br>
+    }
+<br>
+<br>
+{% endif %}
+
+{% if cite.type == "book" %}
+<hr>
+@book{citation-key,
+    <br>
+    &nbsp; &nbsp;author = "{{cite.author}}",
+    <br>
+    &nbsp; &nbsp;title = "{{cite.title}}",
+    <br>
+    &nbsp; &nbsp;publisher = "{{cite.publisher}}",
+    <br>
+    &nbsp; &nbsp;year = "{{cite.year}}"
+    <br>
+    }
+<br>
+<br>
+{% endif %}
+
+{% if cite.type == "inproceedings" %}
+<hr>
+@inproceedings{citation-key,
+    <br>
+    &nbsp; &nbsp;author = "{{cite.author}}",
+    <br>
+    &nbsp; &nbsp;title = "{{cite.title}}",
+    <br>
+    &nbsp; &nbsp;booktitle = "{{cite.booktitle}}",
+    <br>
+    &nbsp; &nbsp;year = "{{cite.year}}"
+    <br>
+    }
+<br>
+<br>
+<hr>
+{% endif %}
+
+{% endfor %}
+
+{% endblock %}
+
