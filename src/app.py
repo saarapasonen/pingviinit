@@ -7,6 +7,10 @@ from config import app, test_env
 def redirect_to_uusi_viite():
     return redirect(url_for("render_uusi_viite"))
 
+def redirect_to_sama_viite(tyyppi):
+    return redirect(url_for("render_specific_type", tyyppi=tyyppi))
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -54,24 +58,38 @@ def render_specific_type(tyyppi):
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
     tyyppi = request.form.get("type")
-    if tyyppi == "book":
-        author = request.form.get("author")
-        publisher = request.form.get("publisher")
-        year = request.form.get("year")
-        title = request.form.get("title")
-        create_citation(tyyppi, author, publisher, year, title)
-    if tyyppi == "article":
-        author = request.form.get("author")
-        journal = request.form.get("journal")
-        year = request.form.get("year")
-        title = request.form.get("title")
-        create_citation(tyyppi, author, None, year, title, journal)
-    if tyyppi == "inproceedings":
-        author = request.form.get("author")
-        booktitle = request.form.get("booktitle")
-        year = request.form.get("year")
-        title = request.form.get("title")
-        create_citation(tyyppi, author, None, year, title, None, booktitle)
+    try:
+        if tyyppi == "book":
+            author = request.form.get("author")
+            publisher = request.form.get("publisher")
+            year = request.form.get("year")
+            title = request.form.get("title")
+            if not author or not publisher or not year or not title:
+                raise ValueError("Täytä kaikki kentät")
+
+            create_citation(tyyppi, author, publisher, year, title)
+        if tyyppi == "article":
+            author = request.form.get("author")
+            journal = request.form.get("journal")
+            year = request.form.get("year")
+            title = request.form.get("title")
+            if not author or not journal or not year or not title:
+                raise ValueError("Täytä kaikki kentät")
+
+            create_citation(tyyppi, author, None, year, title, journal)
+        if tyyppi == "inproceedings":
+            author = request.form.get("author")
+            booktitle = request.form.get("booktitle")
+            year = request.form.get("year")
+            title = request.form.get("title")
+            if not author or not booktitle or not year or not title:
+                raise ValueError("Täytä kaikki kentät")
+            create_citation(tyyppi, author, None, year, title, None, booktitle)
+
+    except Exception as error:
+        flash(str(error))
+        return redirect_to_sama_viite(tyyppi)
+
     return redirect("/")
 
 
