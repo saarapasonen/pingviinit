@@ -5,7 +5,7 @@ from config import app, test_env
 from util import validate_todo
 
 def redirect_to_uusi_viite():
-    return redirect(url_for("render_luo_viite"))
+    return redirect(url_for("render_uusi_viite"))
 
 @app.route("/")
 def index():
@@ -20,8 +20,8 @@ def lisatyt():
     cites = get_cites()
     return render_template("lisatyt.html", cites=cites)
 
-@app.route("/luo-viite", methods=["GET"])
-def render_luo_viite():
+@app.route("/uusi_viite", methods=["GET"])
+def render_uusi_viite():
     return render_template("uusi_viite.html")
 
 @app.route("/luo-viite", methods=["POST"])
