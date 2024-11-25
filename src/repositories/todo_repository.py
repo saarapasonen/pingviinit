@@ -14,7 +14,7 @@ def get_cites():
     return cites
 
 def set_done(todo_id):
-    sql = text("UPDATE todos SET done = TRUE WHERE id = :id")
+    sql = text("UPDATE cites SET done = TRUE WHERE id = :id")
     db.session.execute(sql, { "id": todo_id })
     db.session.commit()
 

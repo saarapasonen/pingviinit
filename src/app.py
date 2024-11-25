@@ -2,7 +2,6 @@ from flask import redirect, render_template, request, jsonify, flash, url_for
 from db_helper import reset_db
 from repositories.todo_repository import get_cites, create_citation, set_done, check_citation_type
 from config import app, test_env
-from util import validate_todo
 
 def redirect_to_uusi_viite():
     return redirect(url_for("render_luo_viite"))
@@ -35,15 +34,14 @@ def handle_type():
         tyyppi = check_citation_type(content)
         if tyyppi == "book":
             return render_template("book.html")
-        elif tyyppi == "article":
+        if tyyppi == "article":
             return render_template("article.html")
-        elif tyyppi == "inproceedings":
+        if tyyppi == "inproceedings":
             return render_template("inproceedings.html")
         
     except Exception as error:
         flash(str(error))
         return redirect_to_uusi_viite()
-    
 
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
@@ -67,7 +65,6 @@ def cite_creation2():
         title = request.form.get("title")
         create_citation(type, author, None, year, title, None, booktitle)
     return redirect("/")
-
 
 @app.route("/toggle_todo/<todo_id>", methods=["POST"])
 def toggle_todo(todo_id):
