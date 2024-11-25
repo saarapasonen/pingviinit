@@ -6,7 +6,7 @@ Bibtex lähteet
 
 {% block body %}
 
-
+<div id="content">
 {% for cite in cites %}
 {% if cite.type == "article" %}
 <hr>
@@ -61,6 +61,30 @@ Bibtex lähteet
 {% endif %}
 
 {% endfor %}
+</div>
+<br>
+<button class="copy-button" onclick="copyText()">Copy</button>
+<br>
+<script>
+    function copyText() {
+        const contentDiv = document.getElementById("content");
+        const range = document.createRange();
+        range.selectNodeContents(contentDiv);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+            const successful = document.execCommand("copy");
+            if (successful) {
+                alert("Kopioitu leikepöydälle");
+            } else {
+                alert("Kopiointi ei onnistunut.");
+            }
+        } catch (err) {
+            alert("Kopiointi ei onnistunut");
+        }
+        window.getSelection().removeAllRanges();
+    }
+</script>
 
 {% endblock %}
 
