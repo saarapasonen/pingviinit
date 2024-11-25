@@ -18,7 +18,10 @@ def set_done(todo_id):
     db.session.execute(sql, { "id": todo_id })
     db.session.commit()
 
-def create_citation(type, author=None, publisher=None, year=None, title=None, journal=None, booktitle=None):
-    sql = text("INSERT INTO citations (type, author, publisher, year, title, journal, booktitle) VALUES (:type, :author, :publisher, :year, :title, :journal, :booktitle)")
-    db.session.execute(sql, {"type": type, "author": author, "publisher": publisher, "year": year, "title": title, "journal": journal, "booktitle": booktitle})
+def create_citation(type, author=None, publisher=None, year=None,
+    title=None, journal=None, booktitle=None):
+    sql = text("INSERT INTO citations (type, author, publisher, year, title, journal, booktitle) \
+        VALUES (:type, :author, :publisher, :year, :title, :journal, :booktitle)")
+    db.session.execute(sql, {"type": type, "author": author, "publisher": publisher, "year": year,
+    "title": title, "journal": journal, "booktitle": booktitle})
     db.session.commit()
