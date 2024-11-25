@@ -1,7 +1,9 @@
+import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for
 from db_helper import reset_db
 from repositories.todo_repository import get_cites, create_citation, set_done, check_citation_type
 from config import app, test_env
+
 
 
 def redirect_to_uusi_viite():
@@ -58,6 +60,7 @@ def render_specific_type(tyyppi):
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
     tyyppi = request.form.get("type")
+    vuosi = datetime.date.today().year
     try:
         if tyyppi == "book":
             author = request.form.get("author")
@@ -66,6 +69,10 @@ def cite_creation2():
             title = request.form.get("title")
             if not author or not publisher or not year or not title:
                 raise ValueError("Täytä kaikki kentät")
+            if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
+                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+            if int(year) > vuosi or year.isnumeric() is False:
+                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
 
             create_citation(tyyppi, author, publisher, year, title)
         if tyyppi == "article":
@@ -75,6 +82,10 @@ def cite_creation2():
             title = request.form.get("title")
             if not author or not journal or not year or not title:
                 raise ValueError("Täytä kaikki kentät")
+            if len(author) > 500 or len(journal) > 500 or len(title) > 500:
+                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+            if int(year) > vuosi or year.isnumeric() is False:
+                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
 
             create_citation(tyyppi, author, None, year, title, journal)
         if tyyppi == "inproceedings":
@@ -84,6 +95,10 @@ def cite_creation2():
             title = request.form.get("title")
             if not author or not booktitle or not year or not title:
                 raise ValueError("Täytä kaikki kentät")
+            if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
+                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+            if int(year) > vuosi or year.isnumeric() is False:
+                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
             create_citation(tyyppi, author, None, year, title, None, booktitle)
 
     except Exception as error:
