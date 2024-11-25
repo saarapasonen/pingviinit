@@ -1,7 +1,7 @@
 import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for
 from db_helper import reset_db
-from repositories.todo_repository import get_cites, create_citation, set_done, check_citation_type
+from repositories.todo_repository import get_cites, create_citation, check_citation_type
 from config import app, test_env
 
 
@@ -47,7 +47,7 @@ def handle_type():
     except Exception as error:
         flash(str(error))
         return redirect_to_uusi_viite()
-    
+
 @app.route("/luo-viite/<tyyppi>")
 def render_specific_type(tyyppi):
     if tyyppi == "book":
@@ -106,13 +106,6 @@ def cite_creation2():
         return redirect_to_sama_viite(tyyppi)
 
     return redirect("/")
-
-
-@app.route("/toggle_todo/<todo_id>", methods=["POST"])
-def toggle_todo(todo_id):
-    set_done(todo_id)
-    return redirect("/")
-
 
 @app.route("/bibtex")
 def bibtex():
