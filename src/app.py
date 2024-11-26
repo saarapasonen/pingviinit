@@ -168,7 +168,6 @@ def download_bibtex():
     )
     return response
 
-
 # testausta varten oleva reitti
 if test_env:
     @app.route("/reset_db")
