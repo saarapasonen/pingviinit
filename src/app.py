@@ -46,7 +46,6 @@ def handle_type():
     except ValueError as error:
         flash(str(error))
         return redirect_to_uusi_viite()
-       
 @app.route("/luo-viite/<tyyppi>")
 def render_specific_type(tyyppi):
     if tyyppi == "book":
