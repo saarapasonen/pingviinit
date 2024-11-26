@@ -1,5 +1,5 @@
 import datetime
-from flask import redirect, render_template, request, jsonify, flash, url_for
+from flask import redirect, render_template, request, jsonify, flash, url_for, Response
 from db_helper import reset_db
 from repositories.todo_repository import get_cites, create_citation, check_citation_type
 from config import app, test_env
@@ -113,6 +113,60 @@ def cite_creation2():
 def bibtex():
     cites = get_cites()
     return render_template("bibtex.html", cites=cites)
+
+@app.route("/download_bibtex")
+def download_bibtex():
+    cites = get_cites()
+    
+    bibtex_cites = []
+
+    for cite in cites:
+        cite_type = cite[1]
+        author = cite[2]
+        title = cite[3]
+        year = cite[4]
+        publisher = cite[5] if len(cite) > 5 else None
+        booktitle = cite[6] if len(cite) > 6 else None
+        journal = cite[7] if len(cite) > 7 else None
+        last_name = author.split()[-1]
+        citation_key = f"{last_name}{year}"
+
+        if cite_type == "article":
+            bibtex_cites.append(f"""
+@article{{{citation_key},
+    author = "{author}",
+    title = "{title}",
+    journal = "{journal}",
+    year = "{year}"
+}}""")
+
+        elif cite_type == "book":
+            bibtex_cites.append(f"""
+@book{{{citation_key},
+    author = "{author}",
+    title = "{title}",
+    publisher = "{publisher}",
+    year = "{year}"
+}}""")
+
+
+        elif cite_type == "inproceedings":
+            bibtex_cites.append(f"""
+@inproceedings{{{citation_key},
+    author = "{author}",
+    title = "{title}",
+    booktitle = "{booktitle}",
+    year = "{year}"
+}}""")
+
+    content = "\n\n".join(bibtex_cites)
+    print(content)
+    response = Response(
+        content,
+        mimetype="text/plain",
+        headers={"Content-Disposition": "attachment;filename=citations.bib"}
+    )
+    return response
 
 
 # testausta varten oleva reitti

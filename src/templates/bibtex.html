@@ -8,9 +8,11 @@ Bibtex lähteet
 
 <div id="content">
 {% for cite in cites %}
+{% set last_name = cite.author.split()[-1] %}
+{% set citation_key = last_name ~ cite.year %}
 {% if cite.type == "article" %}
 <hr>
-@article{citation-key,
+@article{{ "{" ~ citation_key ~ ""}},
     <br>
     &nbsp; &nbsp;author = "{{cite.author}}",
     <br>
@@ -20,14 +22,14 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}"
     <br>
-    }
+}
 <br>
 <br>
 {% endif %}
 
 {% if cite.type == "book" %}
 <hr>
-@book{citation-key,
+@book{{ "{" ~ citation_key ~ ""}},
     <br>
     &nbsp; &nbsp;author = "{{cite.author}}",
     <br>
@@ -37,14 +39,14 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}"
     <br>
-    }
+}
 <br>
 <br>
 {% endif %}
 
 {% if cite.type == "inproceedings" %}
 <hr>
-@inproceedings{citation-key,
+@inproceedings{{ "{" ~ citation_key ~ ""}},
     <br>
     &nbsp; &nbsp;author = "{{cite.author}}",
     <br>
@@ -54,7 +56,7 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}"
     <br>
-    }
+}
 <br>
 <br>
 <hr>
@@ -63,7 +65,11 @@ Bibtex lähteet
 {% endfor %}
 </div>
 <br>
-<button class="copy-button" onclick="copyText()">Copy</button>
+<a href="/download_bibtex" download>
+    <button>Lataa BibTeX</button>
+</a>
+<br>
+<button class="copy-button" onclick="copyText()">Kopio</button>
 <br>
 <script>
     function copyText() {
