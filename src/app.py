@@ -149,7 +149,6 @@ def download_bibtex():
     year = "{year}"
 }}""")
 
-
         elif cite_type == "inproceedings":
             bibtex_cites.append(f"""
 @inproceedings{{{citation_key},
