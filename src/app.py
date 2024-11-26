@@ -4,8 +4,6 @@ from db_helper import reset_db
 from repositories.todo_repository import get_cites, create_citation, check_citation_type
 from config import app, test_env
 
-
-
 def redirect_to_uusi_viite():
     return redirect(url_for("render_uusi_viite"))
 
@@ -159,7 +157,6 @@ def download_bibtex():
 }}""")
 
     content = "\n\n".join(bibtex_cites)
-    print(content)
     response = Response(
         content,
         mimetype="text/plain",
