@@ -71,7 +71,7 @@ def cite_creation2():
             if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
             if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
+                raise ValueError("Vuosiluvun tulee olla numeromuodossa. Vuosiluvun tulee olla välillä 0-nyt.")
 
             create_citation(tyyppi, author, publisher, year, title)
         if tyyppi == "article":
@@ -84,7 +84,7 @@ def cite_creation2():
             if len(author) > 500 or len(journal) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
             if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
+                raise ValueError("Vuosiluvun tulee olla numeromuodossa. Vuosiluvun tulee olla välillä 0-nyt.")
 
             create_citation(tyyppi, author, None, year, title, journal)
         if tyyppi == "inproceedings":
@@ -97,7 +97,7 @@ def cite_creation2():
             if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
             if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError("Vuosiluvut 0-nykypäivä ovat sallittuja vain numeromuodossa")
+                raise ValueError("Vuosiluvun tulee olla numeromuodossa. Vuosiluvun tulee olla välillä 0-nyt.")
             create_citation(tyyppi, author, None, year, title, None, booktitle)
 
     except ValueError as error:
