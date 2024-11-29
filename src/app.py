@@ -35,9 +35,7 @@ def edit_citation(viite_id=None):
         if viite_id:
             cite = get_cite_by_id(viite_id)
             return render_template("muokkaa_viitetta.html", cite=cite)
-        else:
-            cites = get_cites()
-            return render_template("muokkaa_viitetta.html", cites=cites)
+
 
     if request.method == "POST":
         viite_id = request.form.get("type")
