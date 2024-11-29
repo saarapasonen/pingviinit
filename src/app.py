@@ -61,7 +61,7 @@ def edit_citation(viite_id=None):
                         "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                         )
 
-                update_citation(viite_id, author, publisher, year, title)
+                update_citation(viite_id, "book", author, publisher, year, title)
             if viite_id == "article":
                 author = request.form.get("author")
                 journal = request.form.get("journal")
