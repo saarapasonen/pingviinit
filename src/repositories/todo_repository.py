@@ -14,6 +14,11 @@ def get_cites():
     cites = result.fetchall()
     return cites
 
+def get_cite_by_id(viite_id):
+    sql = text("SELECT * FROM citations WHERE id = :id")
+    result = db.session.execute(sql, {"id": viite_id})
+    return result.fetchone()
+
 
 def set_done(todo_id):
     sql = text("UPDATE cites SET done = TRUE WHERE id = :id")
@@ -27,4 +32,19 @@ def create_citation(type1, author=None, publisher=None, year=None,
         VALUES (:type, :author, :publisher, :year, :title, :journal, :booktitle)")
     db.session.execute(sql, {"type": type1, "author": author, "publisher": publisher, "year": year,
                              "title": title, "journal": journal, "booktitle": booktitle})
+    db.session.commit()
+
+
+def update_citation(viite_id, type1, author, publisher, year,
+                    title, journal=None, booktitle=None):
+    sql = text("""
+        UPDATE citations
+        SET type = :type, author = :author, publisher = :publisher,
+            year = :year, title = :title, journal = :journal, booktitle = :booktitle
+        WHERE id = :id
+    """)
+    db.session.execute(sql, {"type": type1, "author": author, "publisher": publisher,
+                            "year": year, "title": title,
+                            "journal": journal, "booktitle": booktitle,
+                            "id": viite_id})
     db.session.commit()
