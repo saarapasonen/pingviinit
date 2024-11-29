@@ -1,6 +1,6 @@
 
 {% block title %}
-Lisätyt lähteet <a href="/bibtex">Bibtex muodosssa</a>
+Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
 {% endblock %}
 
 {% block body %}
@@ -26,8 +26,11 @@ Aikakausijulkaisu:
 <br>
 Kirjan otsikko:
 {{cite.booktitle}}
-<hr>
+<br>
 
+<button name="button-{{ loop.index }}" type="button">Muokkaa viitettä </button>
+<hr>
 {% endfor %}
+
 
 {% endblock %}
