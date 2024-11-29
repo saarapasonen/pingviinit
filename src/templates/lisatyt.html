@@ -28,7 +28,9 @@ Kirjan otsikko:
 {{cite.booktitle}}
 <br>
 
-<button name="button-{{ loop.index }}" type="button">Muokkaa viitettä </button>
+<a href="{{ url_for('muokkaa', viite_id=viite_id) }}">
+    <button name="button-{{ loop.index }}" type="button">Muokkaa viitettä </button>
+</a>
 <hr>
 {% endfor %}
 

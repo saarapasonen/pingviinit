@@ -28,7 +28,8 @@ def lisatyt():
 
 @app.route("/muokkaa_viitetta")
 def muokkaa():
-    return render_template("muokkaa_viitetta.html")
+    cites = get_cites()
+    return render_template("muokkaa_viitetta.html", cites=cites)
 
 @app.route("/uusi_viite", methods=["GET"])
 def render_uusi_viite():
