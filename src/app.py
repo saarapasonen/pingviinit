@@ -26,6 +26,10 @@ def lisatyt():
     cites = get_cites()
     return render_template("lisatyt.html", cites=cites)
 
+@app.route("/muokkaa_viitetta")
+def muokkaa():
+    return render_template{"muokkaa_viitetta.html"}
+
 @app.route("/uusi_viite", methods=["GET"])
 def render_uusi_viite():
     return render_template("uusi_viite.html")
