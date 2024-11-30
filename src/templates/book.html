@@ -19,20 +19,55 @@ Luo kirja
 
 <form action="/luo-viite2" id="content" method="post">
 <p>
+Key:
+<input type="text" id="name" name="key" maxlength="500"/>
+</p>
+<p>
 *Author:
-<input type="text" id="name" name="author" /> 
+<input type="text" id="name" name="author" maxlength="500" /> 
 </p>
 <p>
 *Title:
-<input type="text" id="name" name="title" /> 
+<input type="text" id="name" name="title" maxlength="500" /> 
 </p>
 <p>
 *Publisher:
-<input type="text" id="name" name="publisher" /> 
+<input type="text" id="name" name="publisher" maxlength="500" /> 
 </p> 
 *Year:
 <input type="number" id="name" name="year" min="0" /> 
-</p> 
+</p>
+<p>
+Optional fields:
+</p>
+<p>
+Volume/Number:
+<input type="text" id="name" name="volumenumber" maxlength="500" />
+</p>
+<p>
+Series:
+<input type="text" id="name" name="series" maxlength="500" />
+</p>
+<p>
+Address:
+<input type="text" id="name" name="address" maxlength="500" />
+</p>
+<p>
+Edition:
+<input type="text" id="name" name="edition" maxlength="500" />
+</p>
+<p>
+Month:
+<input type="month" id="name" name="month" />
+</p>
+<p>
+Note:
+<input type="text" id="name" name="note" maxlength="500" />
+</p>
+<p>
+URL:
+<input type="url" id="name" name="url" />
+</p>
 <input type="hidden" name="type" value="book">
 <input type="submit" value="Lisää">
 </form>

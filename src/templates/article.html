@@ -16,23 +16,52 @@ Luo artikkeli
 {% endif %}
 {% endwith %}
 
+
 <form action="/luo-viite2" id="content" method="post">
 <p>
+Key:
+<input type="text" id="name" name="key" maxlength="500"/>
+</p>
+<p>
 *Author:
-<input type="text" id="name" name="author" /> 
+<input type="text" id="name" name="author" maxlength="500" /> 
 </p>
 <p>
 *Title:
-<input type="text" id="name" name="title" /> 
+<input type="text" id="name" name="title" maxlength="500" /> 
 </p>
 <p>
 *Journal:
-<input type="text" id="name" name="journal" /> 
+<input type="text" id="name" name="journal" maxlength="500" /> 
 </p> 
 *Year:
 <input type="number" id="name" name="year" min="0" /> 
 </p>
 <p>
+Optional fields:
+</p>
+<p>
+Volume/Number:
+<input type="text" id="name" name="volumenumber" maxlength="500" />
+</p>
+<p>
+Pages:
+<input type="number" id="name" name="firstpage" min="0" />
+-
+<input type="number" id="name" name="lastpage" min="0" />
+</p>
+<p>
+Month:
+<input type="month" id="name" name="month" />
+</p>
+<p>
+DOI:
+<input type="text" id="name" name="DOI" />
+</p>
+<p>
+Note:
+<input type="text" id="name" name="note" maxlength="500"/>
+</p>
 <input type="hidden" name="type" value="article">
 <input type="submit" value="Lisää">
 </form>
