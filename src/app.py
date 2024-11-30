@@ -35,10 +35,11 @@ def edit_citation(viite_id=None):
         if viite_id:
             cite = get_cite_by_id(viite_id)
             return render_template("muokkaa_viitetta.html", cite=cite)
-
+        return redirect("/lisatyt")
 
     if request.method == "POST":
-        viite_id = request.form.get("type")
+        viite_id = request.form.get("id")
+        tyyppi = request.form.get("type")
         author = request.form.get("author")
         title = request.form.get("title")
         year = request.form.get("year")
@@ -46,56 +47,61 @@ def edit_citation(viite_id=None):
         journal = request.form.get("journal")
         booktitle = request.form.get("booktitle")
         vuosi = datetime.date.today().year
+        values = None
         try:
-            if viite_id == "book":
-                author = request.form.get("author")
-                publisher = request.form.get("publisher")
-                year = request.form.get("year")
-                title = request.form.get("title")
-                if not author or not publisher or not year or not title:
-                    raise ValueError("Täytä kaikki kentät")
-                if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
-                    raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-                if int(year) > vuosi or year.isnumeric() is False:
-                    raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
+            if tyyppi == "book":
+                values = validate_book(author, publisher, year, title, vuosi)
+            elif tyyppi == "article":
+                values = validate_article(author, journal, year, title, vuosi)
 
-                update_citation(viite_id, "book", author, publisher, year, title)
-            if viite_id == "article":
-                author = request.form.get("author")
-                journal = request.form.get("journal")
-                year = request.form.get("year")
-                title = request.form.get("title")
-                if not author or not journal or not year or not title:
-                    raise ValueError("Täytä kaikki kentät")
-                if len(author) > 500 or len(journal) > 500 or len(title) > 500:
-                    raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-                if int(year) > vuosi or year.isnumeric() is False:
-                    raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
+            elif tyyppi == "inproceedings":
+                values = validate_inproceedings(author, booktitle, year, title, vuosi)
 
-                update_citation(viite_id, author, None, year, title, journal)
-            if viite_id == "inproceedings":
-                author = request.form.get("author")
-                booktitle = request.form.get("booktitle")
-                year = request.form.get("year")
-                title = request.form.get("title")
-                if not author or not booktitle or not year or not title:
-                    raise ValueError("Täytä kaikki kentät")
-                if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
-                    raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-                if int(year) > vuosi or year.isnumeric() is False:
-                    raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
-                update_citation(viite_id, author, None, year, title, None, booktitle)
-
+            update_citation(viite_id, values)
             return redirect("/muokkaa_viitetta")
+
         except ValueError as error:
             flash(str(error))
             return redirect(url_for("edit_citation", viite_id=viite_id))
+
+    return redirect("/")
+
+def validate_book(author, publisher, year, title, vuosi):
+    if not author or not publisher or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+                        )
+
+    return [author, publisher, year, title, None, None]
+
+def validate_article(author, journal, year, title, vuosi):
+    if not author or not journal or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(journal) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+                        )
+
+    return [author, journal, year, title, None, None]
+
+def validate_inproceedings(author, booktitle, year, title, vuosi):
+    if not author or not booktitle or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+                        )
+    return [author, booktitle, year, title, None, None]
+
+
 
 @app.route("/uusi_viite", methods=["GET"])
 def render_uusi_viite():

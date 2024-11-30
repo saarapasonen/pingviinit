@@ -24,4 +24,5 @@ disable=raw-checker-failed,
 
 max-args=7
 max-branches=13
+max-positional-arguments=7
 

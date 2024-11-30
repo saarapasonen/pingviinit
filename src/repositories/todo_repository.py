@@ -35,16 +35,15 @@ def create_citation(type1, author=None, publisher=None, year=None,
     db.session.commit()
 
 
-def update_citation(viite_id, type1, author, publisher, year,
-                    title, journal=None, booktitle=None):
+def update_citation(viite_id, values):
     sql = text("""
         UPDATE citations
         SET type = :type, author = :author, publisher = :publisher,
             year = :year, title = :title, journal = :journal, booktitle = :booktitle
         WHERE id = :id
     """)
-    db.session.execute(sql, {"type": type1, "author": author, "publisher": publisher,
-                            "year": year, "title": title,
-                            "journal": journal, "booktitle": booktitle,
-                            "id": viite_id})
+    keys = ["type", "author", "publisher", "year", "title", "journal", "booktitle"]
+    data = dict(zip(keys, values))
+    data['id'] = viite_id
+    db.session.execute(sql, data)
     db.session.commit()
