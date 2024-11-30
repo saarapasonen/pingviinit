@@ -47,3 +47,8 @@ def update_citation(viite_id, values):
     data['id'] = viite_id
     db.session.execute(sql, data)
     db.session.commit()
+
+def remove_citation1(id1):
+    sql = "DELETE FROM citations WHERE id=:id"
+    db.session.execute(text(sql), {"id":id1})
+    db.session.commit()
