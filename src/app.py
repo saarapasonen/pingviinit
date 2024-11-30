@@ -31,12 +31,10 @@ def lisatyt():
 
 @app.route("/muokkaa_viitetta", methods=["GET"])
 @app.route("/muokkaa_viitetta/<int:viite_id>", methods=["GET", "POST"])
-def edit_citation(viite_id=None):
+def edit_citation(viite_id):
     if request.method == "GET":
-        if viite_id:
-            cite = get_cite_by_id(viite_id)
-            return render_template("muokkaa_viitetta.html", cite=cite)
-        return redirect("/lisatyt")
+        cite = get_cite_by_id(viite_id)
+        return render_template("muokkaa_viitetta.html", cite=cite)
 
     if request.method == "POST":
         viite_id = request.form.get("id")
@@ -58,8 +56,9 @@ def edit_citation(viite_id=None):
             elif tyyppi == "inproceedings":
                 values = validate_inproceedings(author, booktitle, year, title, vuosi)
 
-            update_citation(viite_id, values)
-            return redirect("/muokkaa_viitetta")
+            if values is not None:
+                update_citation(viite_id, values)
+                return redirect("/lisatyt")
 
         except ValueError as error:
             flash(str(error))
