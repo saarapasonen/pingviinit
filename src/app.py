@@ -52,7 +52,6 @@ def edit_citation(viite_id):
                 values = validate_book(author, publisher, year, title, vuosi)
             elif tyyppi == "article":
                 values = validate_article(author, journal, year, title, vuosi)
-
             elif tyyppi == "inproceedings":
                 values = validate_inproceedings(author, booktitle, year, title, vuosi)
 
