@@ -71,7 +71,7 @@ def create_inproceedings_citation(tyyppi, key=None, author=None, year=None, titl
                                   booktitle=None, editor=None, volumenumber=None, series=None,
                                   pages=None, address=None, month=None, organization=None,
                                   publisher=None, note=None):
-    sql = text("INSERT INTO citations (type, key, author, publisher, year, title, \
+    sql = text("INSERT INTO citations (type, key, author, publisher, year, title, booktitle, \
                volumenumber, series, address, month, editor, pages, organization, note) \
         VALUES (:type, :key, :author, :publisher, :year, :title, :booktitle, \
                :volumenumber, :series, :address, :month, :editor, :pages, \
