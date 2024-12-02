@@ -38,6 +38,7 @@
    ```
    python3 src/db_helper.py
    ```
+   
 7. Käynnistä sovellus komennolla
    ```
    python src/index.py

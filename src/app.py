@@ -44,16 +44,16 @@ def edit_citation(viite_id):
         publisher = request.form.get("publisher")
         journal = request.form.get("journal")
         booktitle = request.form.get("booktitle")
-        vuosi = datetime.date.today().year
+        current_year = datetime.date.today().year
         values = None
         try:
             if tyyppi == "book":
-                values = validate_book(author, publisher, year, title, vuosi)
+                values = validate_book(author, publisher, year, title, current_year)
             elif tyyppi == "article":
-                values = validate_article(author, journal, year, title, vuosi)
+                values = validate_article(author, journal, year, title, current_year)
 
             elif tyyppi == "inproceedings":
-                values = validate_inproceedings(author, booktitle, year, title, vuosi)
+                values = validate_inproceedings(author, booktitle, year, title, current_year)
 
             if values is not None:
                 update_citation(viite_id, values)
@@ -67,36 +67,36 @@ def edit_citation(viite_id):
 
     return redirect("/")
 
-def validate_book(author, publisher, year, title, vuosi):
+def validate_book(author, publisher, year, title, current_year):
     if not author or not publisher or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-    if int(year) > vuosi or year.isnumeric() is False:
+    if int(year) > current_year or year.isnumeric() is False:
         raise ValueError(
                         "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                         )
 
     return [author, publisher, year, title, None, None]
 
-def validate_article(author, journal, year, title, vuosi):
+def validate_article(author, journal, year, title, current_year):
     if not author or not journal or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(journal) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-    if int(year) > vuosi or year.isnumeric() is False:
+    if int(year) > current_year or year.isnumeric() is False:
         raise ValueError(
                         "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                         )
 
     return [author, journal, year, title, None, None]
 
-def validate_inproceedings(author, booktitle, year, title, vuosi):
+def validate_inproceedings(author, booktitle, year, title, current_year):
     if not author or not booktitle or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-    if int(year) > vuosi or year.isnumeric() is False:
+    if int(year) > current_year or year.isnumeric() is False:
         raise ValueError(
                         "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                         )
@@ -137,7 +137,7 @@ def render_specific_type(tyyppi):
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
     tyyppi = request.form.get("type")
-    vuosi = datetime.date.today().year
+    current_year = datetime.date.today().year
     try:
         if tyyppi == "book":
             author = request.form.get("author")
@@ -148,7 +148,7 @@ def cite_creation2():
                 raise ValueError("Täytä kaikki kentät")
             if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
+            if int(year) > current_year or year.isnumeric() is False:
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
@@ -163,7 +163,7 @@ def cite_creation2():
                 raise ValueError("Täytä kaikki kentät")
             if len(author) > 500 or len(journal) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
+            if int(year) > current_year or year.isnumeric() is False:
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
@@ -178,7 +178,7 @@ def cite_creation2():
                 raise ValueError("Täytä kaikki kentät")
             if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
                 raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
+            if int(year) > current_year or year.isnumeric() is False:
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
