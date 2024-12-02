@@ -138,92 +138,106 @@ def render_specific_type(tyyppi):
 @app.route("/luo-viite2", methods=["POST"])
 def cite_creation2():
     tyyppi = request.form.get("type")
-    vuosi = datetime.date.today().year
     try:
         if tyyppi == "book":
-            author = request.form.get("author")
-            publisher = request.form.get("publisher")
-            year = request.form.get("year")
-            title = request.form.get("title")
-            if not author or not publisher or not year or not title:
-                raise ValueError("Täytä kaikki kentät")
-            if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
-                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError(
-                    "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                    )
-            key = request.form.get("key")
-            volumenumber = request.form.get("voluenumber")
-            series = request.form.get("series")
-            address = request.form.get("address")
-            edition = request.form.get("edition")
-            month = request.form.get("month")
-            note = request.form.get("note")
-
-            create_book_citation(tyyppi, key, author, publisher, year, title, volumenumber,
-                                 series, address, edition, month, note)
-
+            create_book()
         if tyyppi == "article":
-            author = request.form.get("author")
-            journal = request.form.get("journal")
-            year = request.form.get("year")
-            title = request.form.get("title")
-            if not author or not journal or not year or not title:
-                raise ValueError("Täytä kaikki kentät")
-            if len(author) > 500 or len(journal) > 500 or len(title) > 500:
-                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError(
-                    "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                    )
-            key = request.form.get("key")
-            volumenumber = request.form.get("volumenumber")
-            firstpage = request.form.get("firstpage")
-            lastpage = request.form.get("lastpage")
-            pages = f"{firstpage}-{lastpage}"
-            month = request.form.get("month")
-            doi = request.form.get("doi")
-            note = request.form.get("note")
-
-            create_article_citation(tyyppi, key, author, journal, year, title, volumenumber, pages,
-                                    month, doi, note)
-
+            create_article()
         if tyyppi == "inproceedings":
-            author = request.form.get("author")
-            booktitle = request.form.get("booktitle")
-            year = request.form.get("year")
-            title = request.form.get("title")
-            if not author or not booktitle or not year or not title:
-                raise ValueError("Täytä kaikki kentät")
-            if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
-                raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
-            if int(year) > vuosi or year.isnumeric() is False:
-                raise ValueError(
-                    "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                    )
-            key = request.form.get("key")
-            editor = request.form.get("editor")
-            volumenumber = request.form.get("volumenumber")
-            series = request.form.get("series")
-            firstpage = request.form.get("firstpage")
-            lastpage = request.form.get("lastpage")
-            pages = f"{firstpage}-{lastpage}"
-            address = request.form.get("address")
-            month = request.form.get("month")
-            organization = request.form.get("organization")
-            publisher = request.form.get("publisher")
-            note = request.form.get("note")
-
-            create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
-                                          volumenumber, series, pages, address, month, organization,
-                                          publisher, note)
+            create_inproceedings()
 
     except ValueError as error:
         flash(str(error))
         return redirect_to_sama_viite(tyyppi)
 
     return redirect("/")
+
+def create_book():
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    publisher = request.form.get("publisher")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    if not author or not publisher or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+            )
+    key = request.form.get("key")
+    volumenumber = request.form.get("voluenumber")
+    series = request.form.get("series")
+    address = request.form.get("address")
+    edition = request.form.get("edition")
+    month = request.form.get("month")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_book_citation(tyyppi, key, author, publisher, year, title, volumenumber,
+                        series, address, edition, month, note)
+
+
+def create_article():
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    journal = request.form.get("journal")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    if not author or not journal or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(journal) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+            )
+    key = request.form.get("key")
+    volumenumber = request.form.get("volumenumber")
+    firstpage = request.form.get("firstpage")
+    lastpage = request.form.get("lastpage")
+    pages = f"{firstpage}-{lastpage}"
+    month = request.form.get("month")
+    doi = request.form.get("doi")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_article_citation(tyyppi, key, author, journal, year, title, volumenumber, pages,
+                            month, doi, note)
+
+def create_inproceedings():
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    booktitle = request.form.get("booktitle")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    if not author or not booktitle or not year or not title:
+        raise ValueError("Täytä kaikki kentät")
+    if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
+        raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
+    if int(year) > vuosi or year.isnumeric() is False:
+        raise ValueError(
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+    )
+    key = request.form.get("key")
+    editor = request.form.get("editor")
+    volumenumber = request.form.get("volumenumber")
+    series = request.form.get("series")
+    firstpage = request.form.get("firstpage")
+    lastpage = request.form.get("lastpage")
+    pages = f"{firstpage}-{lastpage}"
+    address = request.form.get("address")
+    month = request.form.get("month")
+    organization = request.form.get("organization")
+    publisher = request.form.get("publisher")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
+                                    volumenumber, series, pages, address, month, organization,
+                                    publisher, note)
+
 
 @app.route("/bibtex")
 def bibtex():
