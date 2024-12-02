@@ -9,6 +9,7 @@ ${RESET_URL}  http://${SERVER}/reset_db
 ${BROWSER}    chrome
 ${HEADLESS}   false
 
+
 *** Keywords ***
 Open And Configure Browser
     IF  $BROWSER == 'chrome'
@@ -26,4 +27,3 @@ Open And Configure Browser
 
 Reset Todos
     Go To  ${RESET_URL}
-
