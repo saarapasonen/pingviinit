@@ -2,8 +2,8 @@ import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for, Response, abort
 from db_helper import reset_db
 from repositories.todo_repository import (
-    get_cites, create_citation, check_citation_type, get_cite_by_id, update_citation,
-    remove_citation1
+    get_cites, check_citation_type, get_cite_by_id, update_citation,
+    remove_citation1, create_book_citation, create_article_citation, create_inproceedings_citation
 )
 from config import app, test_env
 
@@ -151,8 +151,17 @@ def cite_creation2():
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
+            key = request.form.get("key")
+            volumenumber = request.form.get("voluenumber")
+            series = request.form.get("series")
+            address = request.form.get("address")
+            edition = request.form.get("edition")
+            month = request.form.get("month")
+            note = request.form.get("note")
 
-            create_citation(tyyppi, author, publisher, year, title)
+            create_book_citation(tyyppi, key, author, publisher, year, title, volumenumber,
+                                 series, address, edition, month, note)
+
         if tyyppi == "article":
             author = request.form.get("author")
             journal = request.form.get("journal")
@@ -166,8 +175,18 @@ def cite_creation2():
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
+            key = request.form.get("key")
+            volumenumber = request.form.get("volumenumber")
+            firstpage = request.form.get("firstpage")
+            lastpage = request.form.get("lastpage")
+            pages = f"{firstpage}-{lastpage}"
+            month = request.form.get("month")
+            doi = request.form.get("doi")
+            note = request.form.get("note")
 
-            create_citation(tyyppi, author, None, year, title, journal)
+            create_article_citation(tyyppi, key, author, journal, year, title, volumenumber, pages,
+                                    month, doi, note)
+
         if tyyppi == "inproceedings":
             author = request.form.get("author")
             booktitle = request.form.get("booktitle")
@@ -181,7 +200,22 @@ def cite_creation2():
                 raise ValueError(
                     "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
                     )
-            create_citation(tyyppi, author, None, year, title, None, booktitle)
+            key = request.form.get("key")
+            editor = request.form.get("editor")
+            volumenumber = request.form.get("volumenumber")
+            series = request.form.get("series")
+            firstpage = request.form.get("firstpage")
+            lastpage = request.form.get("lastpage")
+            pages = f"{firstpage}-{lastpage}"
+            address = request.form.get("address")
+            month = request.form.get("month")
+            organization = request.form.get("organization")
+            publisher = request.form.get("publisher")
+            note = request.form.get("note")
+
+            create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
+                                          volumenumber, series, pages, address, month, organization,
+                                          publisher, note)
 
     except ValueError as error:
         flash(str(error))
