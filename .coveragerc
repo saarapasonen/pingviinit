@@ -1,25 +1,10 @@
 [run]
-branch = True
 source = src
 
 [report]
 show_missing = True
-skip_covered = True
-show_percent = True
 
 [html]
 directory = htmlcov
 
-[coverage:report]
-exclude_lines =
-    pragma: no cover
-    if __name__ == '__main__'
-    raise NotImplementedError
-    pass
-    continue
-    break
-
 [coverage:run]
-omit =
-    */tests/*
-    */story_tests/*
