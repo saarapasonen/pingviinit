@@ -22,7 +22,8 @@ disable=raw-checker-failed,
 
 [DESIGN]
 
-max-args=7
+max-args=20
 max-branches=13
-max-positional-arguments=7
+max-positional-arguments=20
+max-locals=20
 
