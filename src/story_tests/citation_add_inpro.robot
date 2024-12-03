@@ -9,8 +9,8 @@ Test Setup       Reset Todos
 *** Test Cases ***
 An inproceedings citation can be added
     [Documentation]    Tämä testi varmistaa, että käyttäjä voi lisätä inproceedings-muotoisen lähteen.
-    [Documentation]    Lomakkeessa on pakolliset kentät "author", "title", "booktitle" ja "year".
-    [Documentation]    Kun lomake täytetään ja lähetetään, lähde tallentuu tietokantaan ja näkyy listassa.
+    ...    Lomakkeessa on pakolliset kentät "author", "title", "booktitle" ja "year".
+    ...    Kun lomake täytetään ja lähetetään, lähde tallentuu tietokantaan ja näkyy listassa.
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  inproceedings
