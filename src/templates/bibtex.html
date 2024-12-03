@@ -9,7 +9,12 @@ Bibtex lähteet
 <div id="content">
 {% for cite in cites %}
 {% set last_name = cite.author.split()[-1] %}
+{% if cite.key %}
+{% set citation_key = cite.key %}
+{% else %}
 {% set citation_key = last_name ~ cite.year %}
+{% endif %}
+
 {% if cite.type == "article" %}
 <hr>
 @article{{ "{" ~ citation_key ~ ""}},
