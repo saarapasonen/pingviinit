@@ -8,10 +8,10 @@ Bibtex lähteet
 
 <div id="content">
 {% for cite in cites %}
-{% set last_name = cite.author.split()[-1] %}
 {% if cite.key %}
 {% set citation_key = cite.key %}
 {% else %}
+{% set last_name = cite.author.split()[-1] %}
 {% set citation_key = last_name ~ cite.year %}
 {% endif %}
 
@@ -25,8 +25,28 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;journal = "{{cite.journal}}",
     <br>
-    &nbsp; &nbsp;year = "{{cite.year}}"
+    &nbsp; &nbsp;year = "{{cite.year}}",
     <br>
+    {% if cite.volumenumber %}
+    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    <br>
+    {% endif %}
+    {% if cite.pages %}
+    &nbsp; &nbsp;pages = "{{cite.pages}}",
+    <br>
+    {% endif %}
+    {% if cite.month %}
+    &nbsp; &nbsp;month = "{{cite.month.split("-")[-1]}}",
+    <br>
+    {% endif %}
+    {% if cite.doi %}
+    &nbsp; &nbsp;doi = "{{cite.doi}}",
+    <br>
+    {% endif %}
+    {% if cite.note %}
+    &nbsp; &nbsp;note = "{{cite.note}}"
+    <br>
+    {% endif %}
 }
 <br>
 <br>
@@ -42,8 +62,32 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;publisher = "{{cite.publisher}}",
     <br>
-    &nbsp; &nbsp;year = "{{cite.year}}"
+    &nbsp; &nbsp;year = "{{cite.year}}",
     <br>
+    {% if cite.volumenumber %}
+    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    <br>
+    {% endif %}
+    {% if cite.series %}
+    &nbsp; &nbsp;series = "{{cite.series}}",
+    <br>
+    {% endif %}
+    {% if cite.address %}
+    &nbsp; &nbsp;address = "{{cite.address}}",
+    <br>
+    {% endif %}
+    {% if cite.edition %}
+    &nbsp; &nbsp;edition = "{{cite.edition}}",
+    <br>
+    {% endif %}
+    {% if cite.month %}
+    &nbsp; &nbsp;month = "{{cite.month.split("-")[-1]}}",
+    <br>
+    {% endif %}
+    {% if cite.note %}
+    &nbsp; &nbsp;note = "{{cite.note}}"
+    <br>
+    {% endif %}
 }
 <br>
 <br>
@@ -61,6 +105,42 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}"
     <br>
+    {% if cite.editor %}
+    &nbsp; &nbsp;editor = "{{cite.editor}}",
+    <br>
+    {% endif %}
+    {% if cite.volumenumber %}
+    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    <br>
+    {% endif %}
+    {% if cite.series %}
+    &nbsp; &nbsp;series = "{{cite.series}}",
+    <br>
+    {% endif %}
+    {% if cite.pages %}
+    &nbsp; &nbsp;pages = "{{cite.pages}}",
+    <br>
+    {% endif %}
+    {% if cite.address %}
+    &nbsp; &nbsp;address = "{{cite.address}}",
+    <br>
+    {% endif %}
+    {% if cite.month %}
+    &nbsp; &nbsp;month = "{{cite.month.split("-")[-1]}}",
+    <br>
+    {% endif %}
+    {% if cite.organization %}
+    &nbsp; &nbsp;organization = "{{cite.organization}}",
+    <br>
+    {% endif %}
+    {% if cite.publisher %}
+    &nbsp; &nbsp;publisher = "{{cite.publisher}}",
+    <br>
+    {% endif %}
+    {% if cite.note %}
+    &nbsp; &nbsp;note = "{{cite.note}}",
+    <br>
+    {% endif %}
 }
 <br>
 <br>
