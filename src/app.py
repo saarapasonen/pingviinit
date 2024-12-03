@@ -3,8 +3,10 @@ from flask import redirect, render_template, request, jsonify, flash, url_for, R
 from db_helper import reset_db
 from repositories.todo_repository import (
     get_cites, check_citation_type, get_cite_by_id, update_citation,
-    create_book_citation, create_article_citation, create_inproceedings_citation
+    create_book_citation, create_article_citation, create_inproceedings_citation,
+    remove_citation1
 )
+
 from config import app, test_env
 
 def redirect_to_uusi_viite():
@@ -328,6 +330,14 @@ def download_bibtex():
         headers={"Content-Disposition": "attachment;filename=citations.bib"}
     )
     return response
+
+@app.route("/poista-viite", methods=["POST"])
+def remove_citation():
+    id1 = int(request.form.get("id"))
+    if id1 not in [int(citation.id) for citation in get_cites()]:
+        abort(403)
+    remove_citation1(id1)
+    return redirect("/lisatyt")
 
 # testausta varten oleva reitti
 if test_env:
