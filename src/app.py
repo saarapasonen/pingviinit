@@ -197,7 +197,7 @@ def create_article():
     volumenumber = request.form.get("volumenumber")
     firstpage = request.form.get("firstpage")
     lastpage = request.form.get("lastpage")
-    pages = f"{firstpage}-{lastpage}"
+    pages = f"{firstpage}--{lastpage}"
     month = request.form.get("month")
     doi = request.form.get("doi")
     note = request.form.get("note")
@@ -226,7 +226,7 @@ def create_inproceedings():
     series = request.form.get("series")
     firstpage = request.form.get("firstpage")
     lastpage = request.form.get("lastpage")
-    pages = f"{firstpage}-{lastpage}"
+    pages = f"{firstpage}--{lastpage}"
     address = request.form.get("address")
     month = request.form.get("month")
     organization = request.form.get("organization")
