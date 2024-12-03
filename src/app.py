@@ -244,6 +244,20 @@ def bibtex():
     cites = get_cites()
     return render_template("bibtex.html", cites=cites)
 
+def create_bibtex(cite_type, key, author, title, year, **kwargs):
+    fields = [
+        f"    author = \"{author}\"",
+        f"    title = \"{title}\"",
+        f"    year = \"{year}\""
+    ]
+
+    for field, value in kwargs.items():
+        if value is not None:
+            fields.append(f"    {field} = \"{value}\"")
+
+    fields_str = ",\n".join(fields)
+    return f"@{cite_type}{{{key},\n{fields_str}\n}}"
+
 @app.route("/download_bibtex")
 def download_bibtex():
     cites = get_cites()
@@ -251,42 +265,61 @@ def download_bibtex():
     bibtex_cites = []
 
     for cite in cites:
-        cite_type = cite[1]
-        author = cite[2]
-        title = cite[3]
-        year = cite[4]
-        publisher = cite[5] if len(cite) > 5 else None
-        booktitle = cite[6] if len(cite) > 6 else None
-        journal = cite[7] if len(cite) > 7 else None
-        last_name = author.split()[-1]
-        citation_key = f"{last_name}{year}"
+        cite_fields = {
+            'cite_type': cite[1],
+            'key': cite[2],
+            'author': cite[3],
+            'title': cite[4],
+            'year': cite[5],
+            'publisher': cite[6] if len(cite) > 6 else None,
+            'booktitle': cite[7] if len(cite) > 7 else None,
+            'journal': cite[8] if len(cite) > 8 else None,
+            'volumenumber': cite[9] if len(cite) > 9 else None,
+            'series': cite[10] if len(cite) > 10 else None,
+            'address': cite[11] if len(cite) > 11 else None,
+            'edition': cite[12] if len(cite) > 12 else None,
+            'month': cite[13] if len(cite) > 13 else None,
+            'editor': cite[14] if len(cite) > 14 else None,
+            'pages': cite[15] if len(cite) > 15 else None,
+            'organization': cite[16] if len(cite) > 16 else None,
+            'doi': cite[17] if len(cite) > 17 else None,
+            'note': cite[18] if len(cite) > 18 else None
+        }
 
-        if cite_type == "article":
-            bibtex_cites.append(f"""
-@article{{{citation_key},
-    author = "{author}",
-    title = "{title}",
-    journal = "{journal}",
-    year = "{year}"
-}}""")
+        if cite_fields['cite_type'] == "article":
+            bibtex_entry = create_bibtex(
+                "article", cite_fields['key'], cite_fields['author'],
+                cite_fields['title'], cite_fields['year'],
+                journal=cite_fields['journal'], volume=cite_fields['volumenumber'],
+                pages=cite_fields['pages'],
+                month=cite_fields['month'], doi=cite_fields['doi'],
+                note=cite_fields['note']
+            )
+            bibtex_cites.append(bibtex_entry)
 
-        elif cite_type == "book":
-            bibtex_cites.append(f"""
-@book{{{citation_key},
-    author = "{author}",
-    title = "{title}",
-    publisher = "{publisher}",
-    year = "{year}"
-}}""")
+        elif cite_fields['cite_type'] == "book":
+            bibtex_entry = create_bibtex(
+                "book", cite_fields['key'], cite_fields['author'],
+                cite_fields['title'], cite_fields['year'],
+                publisher=cite_fields['publisher'], volume=cite_fields['volumenumber'],
+                series=cite_fields['series'],
+                address=cite_fields['address'], edition=cite_fields['edition'],
+                month=cite_fields['month'], note=cite_fields['note']
+            )
+            bibtex_cites.append(bibtex_entry)
 
-        elif cite_type == "inproceedings":
-            bibtex_cites.append(f"""
-@inproceedings{{{citation_key},
-    author = "{author}",
-    title = "{title}",
-    booktitle = "{booktitle}",
-    year = "{year}"
-}}""")
+        elif cite_fields['cite_type'] == "inproceedings":
+            bibtex_entry = create_bibtex(
+                "inproceedings", cite_fields['key'], cite_fields['author'],
+                cite_fields['title'], cite_fields['year'],
+                booktitle=cite_fields['booktitle'], editor=cite_fields['editor'],
+                volume=cite_fields['volumenumber'],
+                series=cite_fields['series'], pages=cite_fields['pages'],
+                address=cite_fields['address'], month=cite_fields['month'],
+                organization=cite_fields['organization'], publisher=cite_fields['publisher'],
+                note=cite_fields['note']
+            )
+            bibtex_cites.append(bibtex_entry)
 
     content = "\n\n".join(bibtex_cites)
     response = Response(
