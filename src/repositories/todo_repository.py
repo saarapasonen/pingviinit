@@ -25,24 +25,6 @@ def set_done(todo_id):
     db.session.execute(sql, {"id": todo_id})
     db.session.commit()
 
-
-def create_citation(tyyppi, key=None, author=None, publisher=None, year=None,
-                    title=None, journal=None, booktitle=None, volumenumber=None,
-                    series=None, address=None, edition=None, month=None, editor=None,
-                    pages=None, organization=None, doi=None, note=None):
-    sql = text("INSERT INTO citations (type, key, author, publisher, year, title, journal, \
-               booktitle, volumenumber, series, address, edition, month, editor, pages, \
-               organization, doi, note) \
-        VALUES (:type, :key, :author, :publisher, :year, :title, :journal, :booktitle, \
-               :volumenumber, :series, :address, :edition, :month, :editor, :pages, \
-               :organization, :doi, :note)")
-    db.session.execute(sql, {"type": tyyppi, "key": key, "author": author, "publisher": publisher,
-                             "year": year, "title": title, "journal": journal,
-                             "booktitle": booktitle, "volumenumber":volumenumber, "series":series,
-                             "address":address, "edition":edition, "month":month, "editor":editor,
-                             "pages":pages, "organization":organization, "doi":doi, "note":note})
-    db.session.commit()
-
 def create_book_citation(tyyppi, key=None, author=None, publisher=None, year=None, title=None,
                          volumenumber=None, series=None, address=None, edition=None, month=None,
                          note=None):
