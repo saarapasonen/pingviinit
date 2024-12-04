@@ -20,9 +20,12 @@ A citation with optional fields can be added
     Input Text  publisher  Doubleday
     Input Text  year  1977
     Input Text  edition  1st
+    Input Text  series  Horror
     Click Button  Lisää
     Click Link  Lista lisätyistä lähteistä
     Page Should Contain  Stephen King
     Page Should Contain  The Shining
     Page Should Contain  Doubleday
     Page Should Contain  1977
+    Page Should Contain  1st
+    Page Should Contain  Horror
