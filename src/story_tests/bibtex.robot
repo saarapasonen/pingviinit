@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation    Hyväksymistestit tarinalle: Käyttäjä voi generoida Bibtex-tiedoston yhtä nappia painamalla.
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
@@ -8,6 +9,7 @@ Test Setup       Reset Todos
 
 *** Test Cases ***
 A cite is visible in bibtex form
+    [Documentation]  Tämä testi varmistaa, että lähteet muuttuvat oikeaan bibtex muotoon.
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  book
@@ -27,6 +29,7 @@ A cite is visible in bibtex form
     Should Contain  ${bibtex}  year = \"1977\"
 
 A bibtex cite can be copied
+    [Documentation]  Tämä testi varmistaa, että käyttäjä pystyy kopioimaan bibtex-tiedoston leikepöydälle.
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  book
@@ -42,6 +45,8 @@ A bibtex cite can be copied
     Handle Alert  action=ACCEPT  timeout=10s
 
 A bibtex file can be downloaded
+    [Documentation]  Tämä testi varmistaa, että käyttäjä pystyy yhtä nappia painamalla generoimaan
+...               bibtex tiedoston sivustolle lisätyistä lähteistä
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  book

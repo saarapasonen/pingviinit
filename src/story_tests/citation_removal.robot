@@ -1,4 +1,5 @@
 *** Settings ***
+Documentation    Hyväksymistestit tarinalle: Käyttäjä pystyy poistamaan lisätyn lähteen.
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
@@ -6,6 +7,8 @@ Test Setup       Reset Todos
 
 *** Test Cases ***
 A citation can be removed
+    [Documentation]  Tämä testi varmistaa, että käyttäjä pystyy poistamaan valitsemansa lähteen
+    ...            ja lähde poistuu näkyvistä listalta
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  book
