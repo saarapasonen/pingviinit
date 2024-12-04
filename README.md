@@ -7,11 +7,13 @@
   <li>Koodin ylläpidettävyyden tulee olla mahdollisimman hyvä: järkevä nimeäminen, selkeä ja perusteltu arkkitehtuuri ja yhtenäinen koodityyli.</li>
   <li>Asiakas pääsee näkemään koko ajan koodien ja testien tilanteen CI-palvelusta.</li>
   <li>User Storyjen hyväksymiskriteerit toteutuvat.</li>
-</ul> 
+</ul>
 
 
 
 ![GHA workflow badge](https://github.com/saarapasonen/pingviinit/workflows/CI/badge.svg)
+
+[![codecov](https://codecov.io/github/saarapasonen/pingviinit/graph/badge.svg?token=HV13RSQWRS)](https://codecov.io/github/saarapasonen/pingviinit)
 
 # Asennus- ja käyttöohjeet
 1. Kloonaa repositorio omalle koneellesi.
@@ -43,4 +45,4 @@
    python src/index.py
    ```
 8. Nyt sovellus toimii selaimellasi.
-   
+
