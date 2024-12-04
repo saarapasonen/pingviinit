@@ -6,27 +6,102 @@ Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
 {% block body %}
 <hr>
 {% for cite in cites %}
+{% if cite.key %}
+{% set citation_key = cite.key %}
+{% else %}
+{% set last_name = cite.author.split()[-1] %}
+{% set citation_key = last_name ~ cite.year %}
+{% endif %}
 Tyyppi:
 {{cite.type}}
+<br>
+Avain:
+{{citation_key}}
 <br>
 Tekijä:
 {{cite.author}}
 <br>
-Julkaisija:
-{{cite.publisher}}
-<br>
-Vuosi:
-{{cite.year}}
-<br>
 Otsikko:
 {{cite.title}}
 <br>
+{% if cite.publisher %}
+Julkaisija:
+{{cite.publisher}}
+<br>
+{% endif %}
+{% if cite.journal %}
 Aikakausijulkaisu:
 {{cite.journal}}
 <br>
+{% endif %}
+{% if cite.booktitle %}
 Kirjan otsikko:
 {{cite.booktitle}}
 <br>
+{% endif %}
+Vuosi:
+{{cite.year}}
+<br>
+{% if cite.volumenumber %}
+Volyymi/Numero:
+{{cite.volumenumber}}
+<br>
+{% endif %}
+{% if cite.volumenumber %}
+Volyymi/Numero:
+{{cite.volumenumber}}
+<br>
+{% endif %}
+{% if cite.series %}
+Sarja:
+{{cite.series}}
+<br>
+{% endif %}
+{% if cite.address %}
+Osoite:
+{{cite.address}}
+<br>
+{% endif %}
+{% if cite.edition %}
+Painos:
+{{cite.edition}}
+<br>
+{% endif %}
+{% if cite.volumenumber %}
+Volyymi/Numero:
+{{cite.volumenumber}}
+<br>
+{% endif %}
+{% if cite.organization %}
+Organisaatio:
+{{cite.organization}}
+<br>
+{% endif %}
+{% if cite.volumenumber %}
+Volyymi/Numero:
+{{cite.volumenumber}}
+<br>
+{% endif %}
+{% if cite.pages %}
+Sivut:
+{{cite.pages}}
+<br>
+{% endif %}
+{% if cite.month %}
+Kuukausi:
+{{cite.month.split("-")[-1]}}
+<br>
+{% endif %}
+{% if cite.doi %}
+DOI:
+{{cite.doi}}
+<br>
+{% endif %}
+{% if cite.note %}
+Merkintä:
+{{cite.note}}
+<br>
+{% endif %}
 
 <a href="{{ url_for('edit_citation', viite_id=cite.id) }}">
     <button name="button-{{ loop.index }}" type="button">Muokkaa viitettä </button>
