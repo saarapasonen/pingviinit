@@ -25,5 +25,5 @@ Open And Configure Browser
     END
     Open Browser  browser=${BROWSER}  options=${options}
 
-Reset Todos
+Reset Citations
     Go To  ${RESET_URL}
