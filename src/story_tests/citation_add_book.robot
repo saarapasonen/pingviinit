@@ -3,7 +3,7 @@ Documentation    Hyväksymistestit tarinalle: Käyttäjä voi lisätä book-muot
 Resource         resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
-Test Setup       Reset Todos
+Test Setup       Reset Citations
 
 
 *** Test Cases ***

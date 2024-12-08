@@ -3,7 +3,7 @@ Documentation    Hyväksymistestit tarinalle: Käyttäjä pystyy poistamaan lis�
 Resource  resource.robot
 Suite Setup      Open And Configure Browser
 Suite Teardown   Close Browser
-Test Setup       Reset Todos
+Test Setup       Reset Citations
 
 *** Test Cases ***
 A citation can be removed
