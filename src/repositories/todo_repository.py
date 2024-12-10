@@ -26,41 +26,41 @@ def set_done(todo_id):
     db.session.commit()
 
 def create_book_citation(tyyppi, key=None, author=None, publisher=None, year=None, title=None,
-                         volumenumber=None, series=None, address=None, edition=None, month=None,
-                         note=None):
+                         volume=None, number=None, series=None, address=None, edition=None,
+                         month=None, note=None):
     sql = text("INSERT INTO citations (type, key, author, publisher, year, title, \
-               volumenumber, series, address, edition, month, note) \
+               volume, number, series, address, edition, month, note) \
         VALUES (:type, :key, :author, :publisher, :year, :title, \
-               :volumenumber, :series, :address, :edition, :month, :note)")
+               :volume, :number, :series, :address, :edition, :month, :note)")
     db.session.execute(sql, {"type": tyyppi, "key": key, "author": author, "publisher": publisher,
-                             "year": year, "title": title, "volumenumber":volumenumber,
+                             "year": year, "title": title, "volume":volume, "number": number,
                              "series":series, "address":address, "edition":edition, "month":month,
                              "note":note})
     db.session.commit()
 
 def create_article_citation(tyyppi, key=None, author=None, journal=None, year=None, title=None,
-                            volumenumber=None, pages=None, month=None, doi=None, note=None):
+                            volume=None, number=None, pages=None, month=None, doi=None, note=None):
     sql = text("INSERT INTO citations (type, key, author, year, title, journal, \
-                volumenumber, month, pages, doi, note) \
-        VALUES (:type, :key, :author, :year, :title, :journal, :volumenumber, :month, :pages, \
+                volume, number, month, pages, doi, note) \
+        VALUES (:type, :key, :author, :year, :title, :journal, :volume, :number, :month, :pages, \
                :doi, :note)")
     db.session.execute(sql, {"type": tyyppi, "key": key, "author": author, "year": year,
-                             "title": title, "journal": journal, "volumenumber":volumenumber,
+                             "title": title, "journal": journal, "volume":volume, "number":number,
                              "month":month, "pages":pages, "doi":doi, "note":note})
     db.session.commit()
 
 def create_inproceedings_citation(tyyppi, key=None, author=None, year=None, title=None,
-                                  booktitle=None, editor=None, volumenumber=None, series=None,
-                                  pages=None, address=None, month=None, organization=None,
-                                  publisher=None, note=None):
+                                  booktitle=None, editor=None, volume=None, number=None,
+                                  series=None, pages=None, address=None, month=None,
+                                  organization=None, publisher=None, note=None):
     sql = text("INSERT INTO citations (type, key, author, publisher, year, title, booktitle, \
-               volumenumber, series, address, month, editor, pages, organization, note) \
+               volume, number, series, address, month, editor, pages, organization, note) \
         VALUES (:type, :key, :author, :publisher, :year, :title, :booktitle, \
-               :volumenumber, :series, :address, :month, :editor, :pages, \
+               :volume, :number, :series, :address, :month, :editor, :pages, \
                :organization, :note)")
     db.session.execute(sql, {"type": tyyppi, "key": key, "author": author, "publisher": publisher,
                              "year": year, "title": title, "booktitle": booktitle,
-                             "volumenumber":volumenumber, "series":series, "address":address,
+                             "volume":volume, "number":number, "series":series, "address":address,
                              "month":month, "editor":editor, "pages":pages,
                              "organization":organization, "note":note})
     db.session.commit()
