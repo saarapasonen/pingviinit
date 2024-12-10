@@ -39,7 +39,7 @@ def setup_db():
         f"CREATE TABLE {TABLE_NAME} ("
         "  id SERIAL PRIMARY KEY, "
         "  type TEXT,"
-        "  key TEXT,"
+        "  key TEXT UNIQUE,"
         "  author TEXT,"
         "  title TEXT,"
         "  year TEXT,"
