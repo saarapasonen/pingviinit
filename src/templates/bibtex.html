@@ -27,8 +27,12 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}",
     <br>
-    {% if cite.volumenumber %}
-    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    {% if cite.volume %}
+    &nbsp; &nbsp;volume = "{{cite.volume}}",
+    <br>
+    {% endif %}
+    {% if cite.number %}
+    &nbsp; &nbsp;number = "{{cite.number}}",
     <br>
     {% endif %}
     {% if cite.pages %}
@@ -64,8 +68,12 @@ Bibtex lähteet
     <br>
     &nbsp; &nbsp;year = "{{cite.year}}",
     <br>
-    {% if cite.volumenumber %}
-    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    {% if cite.volume %}
+    &nbsp; &nbsp;volume = "{{cite.volume}}",
+    <br>
+    {% endif %}
+    {% if cite.number %}
+    &nbsp; &nbsp;number = "{{cite.number}}",
     <br>
     {% endif %}
     {% if cite.series %}
@@ -109,8 +117,12 @@ Bibtex lähteet
     &nbsp; &nbsp;editor = "{{cite.editor}}",
     <br>
     {% endif %}
-    {% if cite.volumenumber %}
-    &nbsp; &nbsp;volume = "{{cite.volumenumber}}",
+    {% if cite.volume %}
+    &nbsp; &nbsp;volume = "{{cite.volume}}",
+    <br>
+    {% endif %}
+    {% if cite.number %}
+    &nbsp; &nbsp;number = "{{cite.number}}",
     <br>
     {% endif %}
     {% if cite.series %}

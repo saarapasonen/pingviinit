@@ -42,14 +42,14 @@ Kirjan otsikko:
 Vuosi:
 {{cite.year}}
 <br>
-{% if cite.volumenumber %}
-Volyymi/Numero:
-{{cite.volumenumber}}
+{% if cite.volume %}
+Volyymi:
+{{cite.volume}}
 <br>
 {% endif %}
-{% if cite.volumenumber %}
-Volyymi/Numero:
-{{cite.volumenumber}}
+{% if cite.number %}
+Numero:
+{{cite.number}}
 <br>
 {% endif %}
 {% if cite.series %}
@@ -67,19 +67,9 @@ Painos:
 {{cite.edition}}
 <br>
 {% endif %}
-{% if cite.volumenumber %}
-Volyymi/Numero:
-{{cite.volumenumber}}
-<br>
-{% endif %}
 {% if cite.organization %}
 Organisaatio:
 {{cite.organization}}
-<br>
-{% endif %}
-{% if cite.volumenumber %}
-Volyymi/Numero:
-{{cite.volumenumber}}
 <br>
 {% endif %}
 {% if cite.pages %}

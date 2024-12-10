@@ -112,7 +112,7 @@ def render_uusi_viite():
     return render_template("uusi_viite.html")
 
 @app.route("/luo-viite", methods=["POST"])
-def handle_type():
+def select_citation_type():
     content = request.form.get("cite")
 
     try:
@@ -169,7 +169,8 @@ def create_book():
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
             )
     key = request.form.get("key")
-    volumenumber = request.form.get("voluenumber")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
     series = request.form.get("series")
     address = request.form.get("address")
     edition = request.form.get("edition")
@@ -177,8 +178,8 @@ def create_book():
     note = request.form.get("note")
     tyyppi = request.form.get("type")
 
-    create_book_citation(tyyppi, key, author, publisher, year, title, volumenumber,
-                        series, address, edition, month, note)
+    create_book_citation(tyyppi, key, author, publisher, year, title, volume, number,
+                         series, address, edition, month, note)
 
 
 def create_article():
@@ -196,7 +197,8 @@ def create_article():
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
             )
     key = request.form.get("key")
-    volumenumber = request.form.get("volumenumber")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
     firstpage = request.form.get("firstpage")
     lastpage = request.form.get("lastpage")
     pages = f"{firstpage}--{lastpage}"
@@ -205,7 +207,7 @@ def create_article():
     note = request.form.get("note")
     tyyppi = request.form.get("type")
 
-    create_article_citation(tyyppi, key, author, journal, year, title, volumenumber, pages,
+    create_article_citation(tyyppi, key, author, journal, year, title, volume, number, pages,
                             month, doi, note)
 
 def create_inproceedings():
@@ -221,10 +223,11 @@ def create_inproceedings():
     if int(year) > vuosi or year.isnumeric() is False:
         raise ValueError(
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-    )
+            )
     key = request.form.get("key")
     editor = request.form.get("editor")
-    volumenumber = request.form.get("volumenumber")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
     series = request.form.get("series")
     firstpage = request.form.get("firstpage")
     lastpage = request.form.get("lastpage")
@@ -237,8 +240,8 @@ def create_inproceedings():
     tyyppi = request.form.get("type")
 
     create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
-                                    volumenumber, series, pages, address, month, organization,
-                                    publisher, note)
+                                  volume, number, series, pages, address, month, organization,
+                                  publisher, note)
 
 
 @app.route("/bibtex")

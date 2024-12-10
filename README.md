@@ -45,3 +45,4 @@
    python src/index.py
    ```
 8. Nyt sovellus toimii selaimellasi.
+
