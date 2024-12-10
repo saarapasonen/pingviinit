@@ -112,7 +112,7 @@ def render_uusi_viite():
     return render_template("uusi_viite.html")
 
 @app.route("/luo-viite", methods=["POST"])
-def handle_type():
+def select_citation_type():
     content = request.form.get("cite")
 
     try:
