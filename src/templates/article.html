@@ -5,28 +5,31 @@ Luo artikkeli
 {% endblock %}
 
 {% block body %}
-<p>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 140px; text-align: center; font-size: 20px;">
   <a href="/">Palaa kotisivulle</a>
-</p>
+</div>
 
 <style>
   summary {
   list-style-type: '';
 }
 </style>
-<p>Lisätietoa kentistä painamalla otsikoita</p>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
+<div style="background-color: white;">
   <ul>
     {% for message in messages %}
       <li style="color: black;">{{ message }}</li>
     {% endfor %}
   </ul>
+</div>
 {% endif %}
 {% endwith %}
 
-
+<br>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 700px; margin: auto; text-align: center; font-size: 18px;">
+  Lisätietoa kentistä painamalla otsikoit
 <form action="/luo-viite2" id="content" method="post">
 <p>
 <details>
@@ -112,5 +115,5 @@ Optional fields:
 <input type="hidden" name="type" value="article">
 <input type="submit" value="Lisää">
 </form>
-
+</div>
 {% endblock %}
