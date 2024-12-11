@@ -8,9 +8,7 @@ Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
 {% for cite in cites %}
 {% if cite.key %}
 {% set citation_key = cite.key %}
-{% else %}
-{% set last_name = cite.author.split()[-1] %}
-{% set citation_key = last_name ~ cite.year %}
+
 {% endif %}
 Tyyppi:
 {{cite.type}}
