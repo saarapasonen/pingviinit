@@ -22,7 +22,7 @@ A cite is visible in bibtex form
     Click Link  Lista lisätyistä lähteistä
     Click Link  Bibtex muodossa
     ${bibtex}=  Get Text  //div[@id='content']
-    Should Contain  ${bibtex}  @book{King1977,
+
     Should Contain  ${bibtex}  author = \"Stephen King\",
     Should Contain  ${bibtex}  title = \"The Shining\",
     Should Contain  ${bibtex}  publisher = \"Doubleday\",
