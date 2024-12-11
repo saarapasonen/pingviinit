@@ -82,3 +82,9 @@ def remove_citation1(id1):
     sql = "DELETE FROM citations WHERE id=:id"
     db.session.execute(text(sql), {"id":id1})
     db.session.commit()
+
+
+def create_key(author, year):
+    last_name = author.split()[-1]
+    key = last_name + year
+    return key

@@ -4,7 +4,7 @@ from db_helper import reset_db, key_is_unique
 from repositories.todo_repository import (
     get_cites, check_citation_type, get_cite_by_id, update_citation,
     create_book_citation, create_article_citation, create_inproceedings_citation,
-    remove_citation1
+    remove_citation1, create_key
 )
 
 from config import app, test_env
@@ -173,6 +173,8 @@ def create_book():
     key = request.form.get("key")
     if not key_is_unique(key):
         raise ValueError("Avaimen tulee olla uniikki!")
+    if key is None:
+        key = create_key(author, year)
 
 
     volume = request.form.get("volume")
