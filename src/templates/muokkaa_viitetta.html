@@ -5,6 +5,10 @@ Muokkaa viitettä
 {% endblock %}
 
 {% block body %}
+<p>
+    <a href="/">Palaa kotisivulle</a>
+</p>
+
 <h2>Muokkaa viitettä</h2>
 
 <form action="{{ url_for('edit_citation', viite_id=cite.id) }}" method="post">
