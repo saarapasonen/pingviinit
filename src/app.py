@@ -1,6 +1,6 @@
 import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for, Response, abort
-from db_helper import reset_db
+from db_helper import reset_db, key_is_unique
 from repositories.todo_repository import (
     get_cites, check_citation_type, get_cite_by_id, update_citation,
     create_book_citation, create_article_citation, create_inproceedings_citation,
@@ -154,6 +154,8 @@ def cite_creation2():
 
     return redirect("/")
 
+
+
 def create_book():
     vuosi = datetime.date.today().year
     author = request.form.get("author")
@@ -169,6 +171,10 @@ def create_book():
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
             )
     key = request.form.get("key")
+    if not key_is_unique(key):
+        raise ValueError("Avaimen tulee olla uniikki!")
+
+
     volume = request.form.get("volume")
     number = request.form.get("number")
     series = request.form.get("series")
@@ -196,7 +202,11 @@ def create_article():
         raise ValueError(
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
             )
+
     key = request.form.get("key")
+    if not key_is_unique(key):
+        raise ValueError("Avaimen tulee olla uniikki!")
+
     volume = request.form.get("volume")
     number = request.form.get("number")
     firstpage = request.form.get("firstpage")
@@ -225,6 +235,9 @@ def create_inproceedings():
             "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
             )
     key = request.form.get("key")
+    if not key_is_unique(key):
+        raise ValueError("Avaimen tulee olla uniikki!")
+
     editor = request.form.get("editor")
     volume = request.form.get("volume")
     number = request.form.get("number")

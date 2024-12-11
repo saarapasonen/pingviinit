@@ -19,6 +19,10 @@ def table_exists(name):
     result = db.session.execute(sql_table_existence)
     return result.fetchall()[0][0]
 
+def key_is_unique(key):
+    sql_check_key = text(f"SELECT COUNT(*) FROM {TABLE_NAME} WHERE key = :key")
+    result = db.session.execute(sql_check_key, {"key": key})
+    return result.fetchone()[0] == 0
 
 def reset_db():
     print(f"Clearing contents from table {TABLE_NAME}")
