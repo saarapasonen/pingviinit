@@ -20,7 +20,6 @@ def get_cite_by_id(viite_id):
     result = db.session.execute(sql, {"id": viite_id})
     return result.fetchone()
 
-
 def set_done(todo_id):
     sql = text("UPDATE cites SET done = TRUE WHERE id = :id")
     db.session.execute(sql, {"id": todo_id})
@@ -92,3 +91,8 @@ def create_key(author, year):
         key = key + str(randint(0, 1000))
 
     return key
+
+def get_citation_id_by_key(key):
+    sql = text("SELECT id FROM citations WHERE key = :key")
+    result = db.session.execute(sql, {"key": key})
+    return int(result.fetchone()[0])

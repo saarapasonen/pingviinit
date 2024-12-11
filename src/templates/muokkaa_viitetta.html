@@ -6,24 +6,327 @@ Muokkaa viitettä
 
 {% block body %}
 <p>
-    <a href="/">Palaa kotisivulle</a>
+  <a href="/">Palaa kotisivulle</a>
 </p>
 
 <h2>Muokkaa viitettä</h2>
 
-<form action="{{ url_for('edit_citation', viite_id=cite.id) }}" method="post">
-    <input type="hidden" name="id" value="{{ cite.id }}">
-    Tekijä: <input type="text" name="author" value="{{ cite.author }}"><br>
-    Julkaisija: <input type="text" name="publisher" value="{{ cite.publisher }}"><br>
-    Vuosi: <input type="text" name="year" value="{{ cite.year }}"><br>
-    Otsikko: <input type="text" name="title" value="{{ cite.title }}"><br>
-    Aikakausijulkaisu: <input type="text" name="journal" value="{{ cite.journal }}"><br>
-    Kirjan otsikko: <input type="text" name="booktitle" value="{{ cite.booktitle }}"><br>
-    <input type="submit" value="Tallenna muutokset">
+<style>
+  summary {
+  list-style-type: '';
+}
+</style>
+<p>Lisätietoa kentistä painamalla otsikoita</p>
 
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  <ul>
+    {% for message in messages %}
+      <li style="color: black;">{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+{% endwith %}
+
+{% if cite.type == "article" %}
+<form action="/muokkaa_viitetta" id="content" method="post">
+<p>
+<details>
+  <summary>Key:</summary>
+  Vapaaehtoinen uniikki avain lähteelle, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="key" maxlength="500" value="{{ cite.key }}"/>
+</p>
+<p>
+<details>
+  <summary>*Author:</summary>
+  Pakollinen kenttä: Teoksen kirjoittaja, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="author" maxlength="500" value="{{ cite.author }}"/>
+</p>
+<p>
+<details>
+  <summary>*Title:</summary>
+  Pakollinen kenttä: Teoksen nimi, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="title" maxlength="500" value="{{ cite.title }}"/>
+</p>
+<p>
+<details>
+  <summary>*Journal:</summary>
+  Pakollinen kenttä: Teoksen julkaisulehti, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="journal" maxlength="500" value="{{ cite.journal }}"/>
+</p>
+<details>
+  <summary>*Year:</summary>
+  Pakollinen kenttä: Teoksen julkaisuvuosi, ei voi olla tulevaisuudessa tai vanhempi kuin 0 aaj.
+</details>
+<input type="number" id="name" name="year" min="0" value="{{ cite.year }}"/>
+</p>
+<p>
+Optional fields:
+</p>
+<p>
+<details>
+  <summary>Volume:</summary>
+  Teoksen sarjan nide/osa, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="volume" maxlength="500" value="{{ cite.volume }}"/>
+</p>
+<p>
+<details>
+  <summary>Number:</summary>
+  Teoksen sarjan nidoksen/osan julkaisu, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="number" maxlength="500" value="{{ cite.number }}"/>
+</p>
+<p>
+<details>
+  <summary>Pages:</summary>
+  Teoksen lähteenä käytetyt sivunumerot, sivunumerot eivät voi olla negatiivisia.
+</details>
+<input type="number" id="name" name="firstpage" min="0" value="{{ firstpage }}"/>
+-
+<input type="number" id="name" name="lastpage" min="0" value="{{ lastpage }}"/>
+</p>
+<p>
+<details>
+  <summary>Month:</summary>
+  Teoksen julkaisukuukausi, enintään 500 merkkiä pitkä.
+</details>
+<input type="month" id="name" name="month" value="{{ cite.month }}"/>
+</p>
+<p>
+<details>
+  <summary>DOI:</summary>
+  Teoksen DOI-tunniste.
+</details>
+<input type="text" id="name" name="doi" value="{{ cite.doi }}"/>
+</p>
+<p>
+<details>
+  <summary>Note:</summary>
+  Merkintä/huomio teoksesta, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="note" maxlength="500" value="{{ cite.note }}"/>
+</p>
+<input type="hidden" name="type" value="article">
+<input type="hidden" name="id" value="{{ cite.id }}">
+<input type="submit" value="Muokkaa">
 </form>
+{% endif %}
 
+{% if cite.type == "book" %}
+<form action="/muokkaa_viitetta" id="content" method="post">
+    <p>
+    <details>
+      <summary>Key:</summary>
+      Vapaaehtoinen uniikki avain lähteelle, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="key" maxlength="500" value="{{ cite.key }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Author:</summary>
+      Pakollinen kenttä: Teoksen kirjoittaja, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="author" maxlength="500" value="{{ cite.author }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Title:</summary>
+      Pakollinen kenttä: Teoksen nimi, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="title" maxlength="500" value="{{ cite.title }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Publisher:</summary>
+      Pakollinen kenttä: Teoksen julkaisija, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="publisher" maxlength="500" value="{{ cite.publisher }}"/>
+    </p>
+    <details>
+      <summary>*Year:</summary>
+      Pakollinen kenttä: Teoksen julkaisuvuosi, ei voi olla tulevaisuudessa tai vanhempi kuin 0 aaj.
+    </details>
+    <input type="number" id="name" name="year" min="0" value="{{ cite.year }}"/>
+    </p>
+    <p>
+    Optional fields:
+    </p>
+    <p>
+    <details>
+      <summary>Volume:</summary>
+      Teoksen sarjan nide/osa, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="volume" maxlength="500" value="{{ cite.volume }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Number:</summary>
+      Teoksen sarjan nidoksen/osan julkaisu, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="number" maxlength="500" value="{{ cite.number }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Series:</summary>
+      Teoksen kirjasarja, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="series" maxlength="500" value="{{ cite.series }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Address:</summary>
+      Teoksen julkaisijan osoite, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="address" maxlength="500" value="{{ cite.address }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Edition:</summary>
+      Teoksen painosnumero, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="edition" maxlength="500" value="{{ cite.edition }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Month:</summary>
+      Teoksen julkaisukuukausi.
+    </details>
+    <input type="month" id="name" name="month" value="{{ cite.month }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Note:</summary>
+      Merkintä/huomio teoksesta, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="note" maxlength="500" value="{{ cite.note }}"/>
+    </p>
+    <input type="hidden" name="type" value="book">
+    <input type="hidden" name="id" value="{{ cite.id }}">
+    <input type="submit" value="Muokkaa">
+</form>
+{% endif %}
 
-
+{% if cite.type == "inproceedings" %}
+<form action="/muokkaa_viitetta" id="content" method="post">
+    <p>
+    <details>
+      <summary>Key:</summary>
+      Vapaaehtoinen uniikki avain lähteelle, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="key" maxlength="500" value="{{ cite.key }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Author:</summary>
+      Pakollinen kenttä: Teoksen kirjoittaja, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="author" maxlength="500" value="{{ cite.author }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Title:</summary>
+      Pakollinen kenttä: Teoksen nimi, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="title" maxlength="500" value="{{ cite.title }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>*Book title:</summary>
+      Pakollinen kenttä: Kirja tai kokonaisuus mihin teos kuuluu, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="booktitle" maxlength="500" value="{{ cite.booktitle }}"/>
+    </p>
+    <details>
+      <summary>*Year:</summary>
+      Pakollinen kenttä: Teoksen julkaisuvuosi, ei voi olla tulevaisuudessa tai vanhempi kuin 0 aaj.
+    </details>
+    <input type="number" id="name" name="year" min="0" value="{{ cite.year }}"/>
+    </p>
+    <p>
+    Optional fields:
+    </p>
+    <p>
+    <details>
+      <summary>Editor:</summary>
+      Teoksen toimittaja, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="editor" maxlength="500" value="{{ cite.editor }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Volume:</summary>
+      Teoksen sarjan nide/osa, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="volume" maxlength="500" value="{{ cite.volume }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Number:</summary>
+      Teoksen sarjan nidoksen/osan julkaisu, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="number" maxlength="500" value="{{ cite.number }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Series:</summary>
+      Sarja mihin teos kuuluu, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="series" maxlength="500" value="{{ cite.series }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Pages:</summary>
+      Teoksen lähteenä käytetyt sivunumerot, sivunumerot eivät voi olla negatiivisia.
+    </details>
+    <input type="number" id="name" name="firstpage" min="0" value="{{ firstpage }}"/>
+    -
+    <input type="number" id="name" name="lastpage" min="0" value="{{ lastpage }}"/>
+    </p>
+    </p>
+    <p>
+    <details>
+      <summary>Address:</summary>
+      Teoksen julkaisijan osoite, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="address" maxlength="500" value="{{ cite.address }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Month:</summary>
+      Teoksen julkaisukuukausi.
+    </details>
+    <input type="month" id="name" name="month" value="{{ cite.month }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Organization:</summary>
+      Konferenssin järjestäjä tai sponsoroiva organisaatio, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="organization" maxlength="500" value="{{ cite.organization }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Publisher:</summary>
+      Teoksen julkaisija, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="publisher" maxlength="500" value="{{ cite.publisher }}"/>
+    </p>
+    <p>
+    <details>
+      <summary>Note:</summary>
+      Merkintä/huomio teoksesta, enintään 500 merkkiä pitkä.
+    </details>
+    <input type="text" id="name" name="note" maxlength="500" value="{{ cite.note }}"/>
+    </p>
+    <input type="hidden" name="type" value="inproceedings">
+    <input type="hidden" name="id" value="{{ cite.id }}">
+    <input type="submit" value="Muokkaa">
+</form>
+{% endif %}
 
 {% endblock %}
