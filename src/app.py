@@ -1,7 +1,7 @@
 import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for, Response, abort
 from db_helper import reset_db, key_is_unique
-from repositories.todo_repository import (
+from repositories.bibtex_repository import (
     get_cites, check_citation_type, get_cite_by_id, update_citation,
     create_book_citation, create_article_citation, create_inproceedings_citation,
     remove_citation1, create_key
@@ -15,16 +15,13 @@ def redirect_to_uusi_viite():
 def redirect_to_sama_viite(tyyppi):
     return redirect(url_for("render_specific_type", tyyppi=tyyppi))
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
-
 @app.route("/uusi-viite")
-def new():
+def add_new():
     return render_template("uusi_viite.html")
-
 
 @app.route("/lisatyt")
 def lisatyt():
@@ -105,8 +102,6 @@ def validate_inproceedings(author, booktitle, year, title, vuosi):
                         )
     return [author, booktitle, year, title, None, None]
 
-
-
 @app.route("/uusi_viite", methods=["GET"])
 def render_uusi_viite():
     return render_template("uusi_viite.html")
@@ -127,6 +122,7 @@ def select_citation_type():
     except ValueError as error:
         flash(str(error))
         return redirect_to_uusi_viite()
+
 @app.route("/luo-viite/<tyyppi>")
 def render_specific_type(tyyppi):
     if tyyppi == "book":
@@ -153,8 +149,6 @@ def cite_creation2():
         return redirect_to_sama_viite(tyyppi)
 
     return redirect("/")
-
-
 
 def create_book():
     vuosi = datetime.date.today().year
@@ -189,7 +183,6 @@ def create_book():
 
     create_book_citation(tyyppi, key, author, publisher, year, title, volume, number,
                          series, address, edition, month, note)
-
 
 def create_article():
     vuosi = datetime.date.today().year
@@ -266,7 +259,6 @@ def create_inproceedings():
     create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
                                   volume, number, series, pages, address, month, organization,
                                   publisher, note)
-
 
 @app.route("/bibtex")
 def bibtex():
