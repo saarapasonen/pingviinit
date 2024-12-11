@@ -5,36 +5,43 @@ Luo uusi viite
 {% endblock %}
 
 {% block body %}
-<p>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 140px; text-align: center; font-size: 20px;">
   <a href="/">Palaa kotisivulle</a>
-</p>
+</div>
 
-<h2>Luo uusi viite</h2>
+<h2>
+  <div style="background-color: white; padding: 10px; border-radius: 1em; width: 300px; margin: auto; text-align: center; font-size: 50px;">
+    Luo uusi viite
+  </div>
+</h2>
 
 {% with messages = get_flashed_messages() %}
 {% if messages %}
+<div style="background-color: white;">
   <ul>
     {% for message in messages %}
       <li style="color: black;">{{ message }}</li>
     {% endfor %}
   </ul>
+</div>
 {% endif %}
 {% endwith %}
 
-<form action="/luo-viite" method="post">
-  <label for="content">Viite:</label>
-  <label for="cite-select">Valitse viite</label>
-  <select name="cite" id="cite-select">
-    <option value="valitseviite">--Valitse viite--
-    </option>
-    <option value="book">Book</option>
-    <option value="article">Article</option>
-    <option value="inproceedings">Inproceedings</option>
-  </select>
-  <br>
-  <button type="submit">
-    Valitse
-  </button>
-</form>
-
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 200px; margin:auto; text-align: center; font-size: 25px;">
+  <form action="/luo-viite" method="post">
+    <label for="content">Viite:</label>
+    <label for="cite-select">Valitse viite</label>
+    <select name="cite" id="cite-select">
+      <option value="valitseviite">--Valitse viite--
+      </option>
+      <option value="book">Book</option>
+      <option value="article">Article</option>
+      <option value="inproceedings">Inproceedings</option>
+    </select>
+    <br>
+    <button type="submit">
+      Valitse
+    </button>
+  </form>
+</div>
 {% endblock %}
