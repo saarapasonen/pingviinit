@@ -172,9 +172,13 @@ def create_book():
             )
     key = request.form.get("key")
     if not key_is_unique(key):
-        raise ValueError("Avaimen tulee olla uniikki!")
-    if key is None:
+        raise ValueError(
+            "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                  jolloin sivusto luo uniikin avaimen")
+    if key == "":
         key = create_key(author, year)
+
+
 
 
     volume = request.form.get("volume")

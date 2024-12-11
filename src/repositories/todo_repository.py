@@ -1,6 +1,7 @@
+from random import randint
 from sqlalchemy import text
 from config import db
-
+from db_helper import key_is_unique
 
 def check_citation_type(content):
     if content == "valitseviite":
@@ -86,5 +87,8 @@ def remove_citation1(id1):
 
 def create_key(author, year):
     last_name = author.split()[-1]
-    key = last_name + year
+    key = last_name + year + str(randint(0, 1000))
+    while not key_is_unique(key):
+        key = key + str(randint(0, 1000))
+
     return key
