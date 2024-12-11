@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 
 {% block title %}
-Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
 {% endblock %}
 
 {% block body %}
 <p>
+    Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
     <a href="/">Palaa kotisivulle</a>
-  </p>
+</p>
+
 
 <hr>
 {% for cite in cites %}
