@@ -5,11 +5,39 @@ Bibtex lähteet
 {% endblock %}
 
 {% block body %}
-<p>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 140px; text-align: center; font-size: 20px;">
     <a href="/">Palaa kotisivulle</a>
-</p>
+</div>
+<br>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 140px; text-align: left; font-size: 20px;">
+    <a href="/download_bibtex" download>
+        <button>Lataa BibTeX</button>
+    </a>
+    <button class="copy-button" onclick="copyText()">Kopioi</button>
+    <script>
+        function copyText() {
+            const contentDiv = document.getElementById("content");
+            const range = document.createRange();
+            range.selectNodeContents(contentDiv);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                const successful = document.execCommand("copy");
+                if (successful) {
+                    alert("Kopioitu leikepöydälle");
+                } else {
+                    alert("Kopiointi ei onnistunut.");
+                }
+            } catch (err) {
+                alert("Kopiointi ei onnistunut");
+            }
+            window.getSelection().removeAllRanges();
+        }
+    </script>
+</div>
+<br>
 
-<div id="content">
+<div id="content" style="background-color: white; padding: 10px; width: auto; text-align: left; font-size: 20px;">
 {% for cite in cites %}
 {% if cite.key %}
 {% set citation_key = cite.key %}
@@ -162,32 +190,7 @@ Bibtex lähteet
 
 {% endfor %}
 </div>
+
 <br>
-<a href="/download_bibtex" download>
-    <button>Lataa BibTeX</button>
-</a>
-<br>
-<button class="copy-button" onclick="copyText()">Kopioi</button>
-<br>
-<script>
-    function copyText() {
-        const contentDiv = document.getElementById("content");
-        const range = document.createRange();
-        range.selectNodeContents(contentDiv);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        try {
-            const successful = document.execCommand("copy");
-            if (successful) {
-                alert("Kopioitu leikepöydälle");
-            } else {
-                alert("Kopiointi ei onnistunut.");
-            }
-        } catch (err) {
-            alert("Kopiointi ei onnistunut");
-        }
-        window.getSelection().removeAllRanges();
-    }
-</script>
 
 {% endblock %}
