@@ -178,9 +178,6 @@ def create_book():
     if key == "":
         key = create_key(author, year)
 
-
-
-
     volume = request.form.get("volume")
     number = request.form.get("number")
     series = request.form.get("series")
@@ -211,7 +208,11 @@ def create_article():
 
     key = request.form.get("key")
     if not key_is_unique(key):
-        raise ValueError("Avaimen tulee olla uniikki!")
+        raise ValueError(
+            "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                  jolloin sivusto luo uniikin avaimen")
+    if key == "":
+        key = create_key(author, year)
 
     volume = request.form.get("volume")
     number = request.form.get("number")
@@ -242,7 +243,11 @@ def create_inproceedings():
             )
     key = request.form.get("key")
     if not key_is_unique(key):
-        raise ValueError("Avaimen tulee olla uniikki!")
+        raise ValueError(
+            "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                  jolloin sivusto luo uniikin avaimen")
+    if key == "":
+        key = create_key(author, year)
 
     editor = request.form.get("editor")
     volume = request.form.get("volume")
