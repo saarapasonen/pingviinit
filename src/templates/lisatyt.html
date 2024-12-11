@@ -5,19 +5,22 @@ Lisätyt lähteet
 {% endblock %}
 
 {% block body %}
-<p>
+<div style="background-color: white; padding: 10px; border-radius: 1em; width: 140px; text-align: center; font-size: 20px;">
     <a href="/">Palaa kotisivulle</a>
-    <br>
+  </div>
+<br>  
+<div style="background-color: white; padding: 10px; width: 270px; text-align: center; font-size: 20px;">
     Lisätyt lähteet <a href="/bibtex">Bibtex muodossa</a>
-</p>
+</div>
 
-
+<br>
+<div style="background-color: white; padding: 10px; width: auto; text-align: left; font-size: 20px;">
 <hr>
 {% for cite in cites %}
 {% if cite.key %}
 {% set citation_key = cite.key %}
-
 {% endif %}
+
 Tyyppi:
 {{cite.type}}
 <br>
@@ -109,5 +112,5 @@ Merkintä:
 <hr>
 {% endfor %}
 
-
+</div>
 {% endblock %}
