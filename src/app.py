@@ -2,12 +2,13 @@ import datetime
 from flask import redirect, render_template, request, jsonify, flash, url_for, Response, abort
 from db_helper import reset_db, key_is_unique
 from repositories.bibtex_repository import (
-    get_cites, check_citation_type, get_cite_by_id, update_citation,
+    get_cites, check_citation_type, get_cite_by_id,
     create_book_citation, create_article_citation, create_inproceedings_citation,
-    remove_citation1, create_key
+    remove_citation1, create_key, get_citation_id_by_key
 )
 
 from config import app, test_env
+from util import convert_pages_to_first_and_last, check_existence
 
 def redirect_to_uusi_viite():
     return redirect(url_for("render_uusi_viite"))
@@ -28,79 +29,100 @@ def lisatyt():
     cites = get_cites()
     return render_template("lisatyt.html", cites=cites)
 
-@app.route("/muokkaa_viitetta", methods=["GET"])
-@app.route("/muokkaa_viitetta/<int:viite_id>", methods=["GET", "POST"])
+@app.route("/muokkaa_viitetta/<int:viite_id>", methods=["GET"])
 def edit_citation(viite_id):
-    if request.method == "GET":
-        cite = get_cite_by_id(viite_id)
-        return render_template("muokkaa_viitetta.html", cite=cite)
+    cite = get_cite_by_id(viite_id)
+    firstpage, lastpage = convert_pages_to_first_and_last(cite.pages)
+    return render_template("muokkaa_viitetta.html", cite=cite, firstpage=firstpage, \
+                            lastpage=lastpage)
 
-    if request.method == "POST":
-        viite_id = request.form.get("id")
-        tyyppi = request.form.get("type")
-        author = request.form.get("author")
-        title = request.form.get("title")
-        year = request.form.get("year")
-        publisher = request.form.get("publisher")
-        journal = request.form.get("journal")
-        booktitle = request.form.get("booktitle")
-        vuosi = datetime.date.today().year
-        values = None
-        try:
-            if tyyppi == "book":
-                values = validate_book(author, publisher, year, title, vuosi)
-            elif tyyppi == "article":
-                values = validate_article(author, journal, year, title, vuosi)
+@app.route("/muokkaa_viitetta", methods=["POST"])
+def edit_citation2():
+    citation_id = int(request.form.get("id"))
+    check_existence(citation_id)
+    tyyppi = request.form.get("type")
+    try:
+        if tyyppi == "book":
+            validate_book(citation_id)
+            remove_citation1(citation_id)
+            create_book_without_validation()
+        if tyyppi == "article":
+            validate_article(citation_id)
+            remove_citation1(citation_id)
+            create_article_without_validation()
+        if tyyppi == "inproceedings":
+            validate_inproceedings(citation_id)
+            remove_citation1(citation_id)
+            create_inproceedings_without_validation()
 
-            elif tyyppi == "inproceedings":
-                values = validate_inproceedings(author, booktitle, year, title, vuosi)
+    except ValueError as error:
+        flash(str(error))
+        return redirect(f"/muokkaa_viitetta/{citation_id}")
 
-            if values is not None:
-                update_citation(viite_id, values)
-                return redirect("/lisatyt")
+    return redirect("/lisatyt")
 
-        except ValueError as error:
-            flash(str(error))
-            return redirect(url_for("edit_citation", viite_id=viite_id))
-
-        return redirect("/lisatyt")
-
-    return redirect("/")
-
-def validate_book(author, publisher, year, title, vuosi):
+def validate_book(citation_to_modify_id=None):
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    publisher = request.form.get("publisher")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
     if not author or not publisher or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
         raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+            )
+    if not key_is_unique(key):
+        if not citation_to_modify_id or get_citation_id_by_key(key) != citation_to_modify_id:
+            raise ValueError(
+                "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                      jolloin sivusto luo uniikin avaimen")
 
-    return [author, publisher, year, title, None, None]
-
-def validate_article(author, journal, year, title, vuosi):
+def validate_article(citation_to_modify_id=None):
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    journal = request.form.get("journal")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
     if not author or not journal or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(journal) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
         raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+            )
+    if not key_is_unique(key):
+        if not citation_to_modify_id or get_citation_id_by_key(key) != citation_to_modify_id:
+            raise ValueError(
+                "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                      jolloin sivusto luo uniikin avaimen")
 
-    return [author, journal, year, title, None, None]
-
-def validate_inproceedings(author, booktitle, year, title, vuosi):
+def validate_inproceedings(citation_to_modify_id=None):
+    vuosi = datetime.date.today().year
+    author = request.form.get("author")
+    booktitle = request.form.get("booktitle")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
     if not author or not booktitle or not year or not title:
         raise ValueError("Täytä kaikki kentät")
     if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
         raise ValueError(
-                        "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
-                        )
-    return [author, booktitle, year, title, None, None]
+            "Vuosiluku tulee olla välillä 0-nyt. Vuosiluvun tulee olla numeromuodossa."
+            )
+    if not key_is_unique(key):
+        if not citation_to_modify_id or get_citation_id_by_key(key) != citation_to_modify_id:
+            raise ValueError(
+                "Avaimen tulee olla uniikki! Vaihda toiseen tai jätä tyhjäksi, \
+                      jolloin sivusto luo uniikin avaimen")
 
 @app.route("/uusi_viite", methods=["GET"])
 def render_uusi_viite():
@@ -242,6 +264,73 @@ def create_inproceedings():
     if key == "":
         key = create_key(author, year)
 
+    editor = request.form.get("editor")
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    series = request.form.get("series")
+    firstpage = request.form.get("firstpage")
+    lastpage = request.form.get("lastpage")
+    pages = f"{firstpage}--{lastpage}"
+    address = request.form.get("address")
+    month = request.form.get("month")
+    organization = request.form.get("organization")
+    publisher = request.form.get("publisher")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_inproceedings_citation(tyyppi, key, author, year, title, booktitle, editor,
+                                  volume, number, series, pages, address, month, organization,
+                                  publisher, note)
+
+def create_book_without_validation():
+    author = request.form.get("author")
+    publisher = request.form.get("publisher")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
+    if key == "":
+        key = create_key(author, year)
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    series = request.form.get("series")
+    address = request.form.get("address")
+    edition = request.form.get("edition")
+    month = request.form.get("month")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_book_citation(tyyppi, key, author, publisher, year, title, volume, number,
+                         series, address, edition, month, note)
+
+def create_article_without_validation():
+    author = request.form.get("author")
+    journal = request.form.get("journal")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
+    if key == "":
+        key = create_key(author, year)
+    volume = request.form.get("volume")
+    number = request.form.get("number")
+    firstpage = request.form.get("firstpage")
+    lastpage = request.form.get("lastpage")
+    pages = f"{firstpage}--{lastpage}"
+    month = request.form.get("month")
+    doi = request.form.get("doi")
+    note = request.form.get("note")
+    tyyppi = request.form.get("type")
+
+    create_article_citation(tyyppi, key, author, journal, year, title, volume, number, pages,
+                            month, doi, note)
+
+def create_inproceedings_without_validation():
+    author = request.form.get("author")
+    booktitle = request.form.get("booktitle")
+    year = request.form.get("year")
+    title = request.form.get("title")
+    key = request.form.get("key")
+    if key == "":
+        key = create_key(author, year)
     editor = request.form.get("editor")
     volume = request.form.get("volume")
     number = request.form.get("number")
