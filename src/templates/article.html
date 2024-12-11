@@ -19,51 +19,84 @@ Luo artikkeli
 
 <form action="/luo-viite2" id="content" method="post">
 <p>
-Key:
+<details>
+  <summary>Key:</summary>
+  Vapaaehtoinen uniikki avain lähteelle, enintään 500 merkkiä pitkä.
+</details>
 <input type="text" id="name" name="key" maxlength="500"/>
 </p>
 <p>
-*Author:
-<input type="text" id="name" name="author" maxlength="500" /> 
+<details>
+  <summary>*Author:</summary>
+  Pakollinen kenttä: Teoksen kirjoittaja, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="author" maxlength="500" />
 </p>
 <p>
-*Title:
-<input type="text" id="name" name="title" maxlength="500" /> 
+<details>
+  <summary>*Title:</summary>
+  Pakollinen kenttä: Teoksen nimi, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="title" maxlength="500" />
 </p>
 <p>
-*Journal:
-<input type="text" id="name" name="journal" maxlength="500" /> 
-</p> 
-*Year:
-<input type="number" id="name" name="year" min="0" /> 
+<details>
+  <summary>*Journal:</summary>
+  Pakollinen kenttä: Teoksen julkaisulehti, enintään 500 merkkiä pitkä.
+</details>
+<input type="text" id="name" name="journal" maxlength="500" />
+</p>
+<details>
+  <summary>*Year:</summary>
+  Pakollinen kenttä: Teoksen julkaisuvuosi, ei voi olla tulevaisuudessa tai vanhempi kuin 0 aaj.
+</details>
+<input type="number" id="name" name="year" min="0" />
 </p>
 <p>
 Optional fields:
 </p>
 <p>
-Volume:
+<details>
+  <summary>Volume:</summary>
+  Teoksen sarjan nide/osa, enintään 500 merkkiä pitkä.
+</details>
 <input type="text" id="name" name="volume" maxlength="500" />
 </p>
 <p>
-Number:
+<details>
+  <summary>Number:</summary>
+  Teoksen sarjan nidoksen/osan julkaisu, enintään 500 merkkiä pitkä.
+</details>
 <input type="text" id="name" name="number" maxlength="500" />
 </p>
 <p>
-Pages:
+<details>
+  <summary>Pages:</summary>
+  Teoksen lähteenä käytetyt sivunumerot, sivunumerot eivät voi olla negatiivisia.
+</details>
 <input type="number" id="name" name="firstpage" min="0" />
 -
 <input type="number" id="name" name="lastpage" min="0" />
 </p>
 <p>
-Month:
+<details>
+  <summary>Month:</summary>
+  Teoksen julkaisukuukausi, enintään 500 merkkiä pitkä.
+</details>
 <input type="month" id="name" name="month" />
 </p>
 <p>
-DOI:
+<details>
+  <summary>DOI:</summary>
+  Teoksen DOI-tunniste.
+</details>
 <input type="text" id="name" name="doi" />
 </p>
 <p>
-Note:
+<details>
+  <summary>Note:</summary>
+  Merkintä/huomio teoksesta, enintään 500 merkkiä pitkä.
+</details>
 <input type="text" id="name" name="note" maxlength="500"/>
 </p>
 <input type="hidden" name="type" value="article">
