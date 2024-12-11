@@ -21,4 +21,5 @@ A citation can be removed
     Click Link  Lista lisätyistä lähteistä
     Page Should Contain  Kalle K.
     Click Button  Poista viite
+    Handle Alert
     Page Should Not Contain  Kalle K.

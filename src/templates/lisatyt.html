@@ -106,7 +106,7 @@ Merkintä:
     <button name="button-{{ loop.index }}" type="button">Muokkaa viitettä </button>
 </a>
 <form action=/poista-viite method="POST">
-    <input type="submit" value="Poista viite">
+    <input type="submit" value="Poista viite" onclick="return confirm('Haluatko varmasti poistaa viitteen?')">
     <input type="hidden" name="id" value="{{ cite.id }}">
 </form>
 <hr>
