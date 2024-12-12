@@ -354,15 +354,14 @@ def bibtex():
     cites = get_cites()
     return render_template("bibtex.html", cites=cites)
 
-def create_bibtex(cite_type, key, author, title, year, **kwargs):
+def create_bibtex(cite_type, key, author, title, **kwargs):
     fields = [
         f"    author = \"{author}\"",
         f"    title = \"{title}\"",
-        f"    year = \"{year}\""
     ]
 
     for field, value in kwargs.items():
-        if value is not None:
+        if value is not None and value != "":
             fields.append(f"    {field} = \"{value}\"")
 
     fields_str = ",\n".join(fields)
@@ -380,27 +379,30 @@ def download_bibtex():
             'key': cite[2],
             'author': cite[3],
             'title': cite[4],
-            'year': cite[5],
+            'year': cite[5] if len(cite) > 5 else None,
             'publisher': cite[6] if len(cite) > 6 else None,
             'booktitle': cite[7] if len(cite) > 7 else None,
             'journal': cite[8] if len(cite) > 8 else None,
-            'volumenumber': cite[9] if len(cite) > 9 else None,
-            'series': cite[10] if len(cite) > 10 else None,
-            'address': cite[11] if len(cite) > 11 else None,
-            'edition': cite[12] if len(cite) > 12 else None,
-            'month': cite[13] if len(cite) > 13 else None,
-            'editor': cite[14] if len(cite) > 14 else None,
-            'pages': cite[15] if len(cite) > 15 else None,
-            'organization': cite[16] if len(cite) > 16 else None,
-            'doi': cite[17] if len(cite) > 17 else None,
-            'note': cite[18] if len(cite) > 18 else None
+            'volume': cite[9] if len(cite) > 9 else None,
+            'number': cite[10] if len(cite) > 10 else None,
+            'series': cite[11] if len(cite) > 11 else None,
+            'address': cite[12] if len(cite) > 12 else None,
+            'edition': cite[13] if len(cite) > 13 else None,
+            'month': cite[14] if len(cite) > 14 else None,
+            'editor': cite[15] if len(cite) > 15 else None,
+            'pages': cite[16] if len(cite) > 16 else None,
+            'organization': cite[17] if len(cite) > 17 else None,
+            'doi': cite[18] if len(cite) > 18 else None,
+            'note': cite[19] if len(cite) > 19 else None
         }
 
         if cite_fields['cite_type'] == "article":
             bibtex_entry = create_bibtex(
                 "article", cite_fields['key'], cite_fields['author'],
-                cite_fields['title'], cite_fields['year'],
-                journal=cite_fields['journal'], volume=cite_fields['volumenumber'],
+                cite_fields['title'],journal=cite_fields['journal'],
+                year=cite_fields['year'],
+                volume=cite_fields['volume'],
+                number=cite_fields['number'],
                 pages=cite_fields['pages'],
                 month=cite_fields['month'], doi=cite_fields['doi'],
                 note=cite_fields['note']
@@ -410,8 +412,10 @@ def download_bibtex():
         elif cite_fields['cite_type'] == "book":
             bibtex_entry = create_bibtex(
                 "book", cite_fields['key'], cite_fields['author'],
-                cite_fields['title'], cite_fields['year'],
-                publisher=cite_fields['publisher'], volume=cite_fields['volumenumber'],
+                cite_fields['title'], publisher=cite_fields['publisher'],
+                year=cite_fields['year'],
+                volume=cite_fields['volume'],
+                number=cite_fields['number'],
                 series=cite_fields['series'],
                 address=cite_fields['address'], edition=cite_fields['edition'],
                 month=cite_fields['month'], note=cite_fields['note']
@@ -421,9 +425,11 @@ def download_bibtex():
         elif cite_fields['cite_type'] == "inproceedings":
             bibtex_entry = create_bibtex(
                 "inproceedings", cite_fields['key'], cite_fields['author'],
-                cite_fields['title'], cite_fields['year'],
-                booktitle=cite_fields['booktitle'], editor=cite_fields['editor'],
-                volume=cite_fields['volumenumber'],
+                cite_fields['title'], booktitle=cite_fields['booktitle'],
+                year=cite_fields['year'],
+                editor=cite_fields['editor'],
+                volume=cite_fields['volume'],
+                number=cite_fields['number'],
                 series=cite_fields['series'], pages=cite_fields['pages'],
                 address=cite_fields['address'], month=cite_fields['month'],
                 organization=cite_fields['organization'], publisher=cite_fields['publisher'],
