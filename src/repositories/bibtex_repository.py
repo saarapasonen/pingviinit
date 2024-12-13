@@ -20,11 +20,6 @@ def get_cite_by_id(viite_id):
     result = db.session.execute(sql, {"id": viite_id})
     return result.fetchone()
 
-def set_done(todo_id):
-    sql = text("UPDATE cites SET done = TRUE WHERE id = :id")
-    db.session.execute(sql, {"id": todo_id})
-    db.session.commit()
-
 def create_book_citation(tyyppi, key=None, author=None, publisher=None, year=None, title=None,
                          volume=None, number=None, series=None, address=None, edition=None,
                          month=None, note=None):

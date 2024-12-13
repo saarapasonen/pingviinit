@@ -156,7 +156,7 @@ def render_specific_type(tyyppi):
     return redirect_to_uusi_viite()
 
 @app.route("/luo-viite2", methods=["POST"])
-def cite_creation2():
+def cite_creation():
     tyyppi = request.form.get("type")
     try:
         if tyyppi == "book":
