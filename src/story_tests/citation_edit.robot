@@ -8,7 +8,7 @@ Test Setup       Reset Citations
 
 *** Test Cases ***
 A citation with optional fields can be added
-    [Documentation]  Tämä testi varmistaa, että muokkaa-painikkeella käyttäjä pääsee uudelle sivulle muokkaamaan valitsemaansa lähdettä
+    [Documentation]  Tämä testi varmistaa, että muokkaa-painikkeella käyttäjä pääsee uudelle sivulle muokkaamaan valitsemaansa lähdettä ja muokatut tiedot tallentuvat oikein
     Go To  ${HOME_URL}
     Click Link  Luo uusi viite
     Select From List By Value  cite-select  book
@@ -23,3 +23,8 @@ A citation with optional fields can be added
     Click Link  Lista lisätyistä lähteistä
     Click Button  Muokkaa viitettä
     Page Should Contain  Muokkaa viitettä
+
+    Input Text  author  Robin Hood
+    Click Button  Muokkaa
+    Page Should Contain  Robin Hood
+
