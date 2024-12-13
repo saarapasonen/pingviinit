@@ -31,10 +31,3 @@ def convert_pages_to_first_and_last(pages):
 def check_existence(citation_id):
     if not get_cite_by_id(citation_id):
         abort(403)
-
-def validate_todo(content):
-    if len(content) < 5:
-        raise UserInputError("Todo content length must be greater than 4")
-
-    if len(content) > 100:
-        raise UserInputError("Todo content length must be smaller than 100")
