@@ -69,7 +69,7 @@ def validate_book(citation_to_modify_id=None):
     title = request.form.get("title")
     key = request.form.get("key")
     if not author or not publisher or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
@@ -90,7 +90,7 @@ def validate_article(citation_to_modify_id=None):
     title = request.form.get("title")
     key = request.form.get("key")
     if not author or not journal or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(journal) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
@@ -111,7 +111,7 @@ def validate_inproceedings(citation_to_modify_id=None):
     title = request.form.get("title")
     key = request.form.get("key")
     if not author or not booktitle or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
@@ -179,7 +179,7 @@ def create_book():
     year = request.form.get("year")
     title = request.form.get("title")
     if not author or not publisher or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(publisher) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
@@ -213,7 +213,7 @@ def create_article():
     year = request.form.get("year")
     title = request.form.get("title")
     if not author or not journal or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(journal) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
@@ -249,7 +249,7 @@ def create_inproceedings():
     year = request.form.get("year")
     title = request.form.get("title")
     if not author or not booktitle or not year or not title:
-        raise ValueError("Täytä kaikki kentät")
+        raise ValueError("Täytä kaikki pakolliset kentät")
     if len(author) > 500 or len(booktitle) > 500 or len(title) > 500:
         raise ValueError("Yhteen kenttään voi kirjoittaa max. 500 merkkiä")
     if int(year) > vuosi or year.isnumeric() is False:
